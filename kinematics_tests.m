@@ -7,7 +7,7 @@ r3 = 13.8*10^(-2); % o3B
 r5 = 4.75*10^(-2); % BC
 r7 = 17.1*10^(-2); % o4o3
 
-syms theta2 theta3 r4 theta5 r6;
+syms theta2 theta3(theta2) r4(theta2) theta5(theta2) r6(theta2);
 
 % link 2 movement
 dtheta2 = 1800; % deg/s from 300 rpm
@@ -24,11 +24,11 @@ ddtheta2 = 0; % constant angular velocity
 
 %% Part 1- Calculations for kinematic variables, using LCEs
 % Found using link closure equations as detailed in the report
-theta3_eqn = theta3 == atand((-sin(theta2))/(3.12 + cosd(theta2)));
+theta3_eqn = theta3 == atand((-sind(theta2))/(3.12 + cosd(theta2)));
 r4_eqn = r4 == (2.5*sind(theta2)) / (sind(theta3));
 
 theta5_eqn = theta5 == acosd((r7 - r3*cosd(180-theta3)) / (r5)) + 180;
-r6_eqn = r6 == r3*sind(180-theta3) - r5*sin(theta5-180);
+r6_eqn = r6 == r3*sind(180-theta3) - r5*sind(theta5-180);
 
 % Hint: Check if the angle needs to be adjusted to its true value
 % Hint: Check this for all other angles too
@@ -36,18 +36,22 @@ r6_eqn = r6 == r3*sind(180-theta3) - r5*sin(theta5-180);
 %% Derivative equations of kinematic vars (d/dt) 
 syms dtheta3 ddtheta3 dr4 dtheta5 ddtheta5 dr6
 
-dtheta3_eqn = dtheta3 == diff(theta3_eqn);
-ddtheta3_eqn = ddtheta3 == diff(dtheta3_eqn);
+dtheta3_eqn = diff(theta3_eqn); % differentiates theta3_eqn with respect to theta3(theta2) as diff(theta3(theta2), theta2)
+ddtheta3_eqn = diff(dtheta3_eqn); % differentiates dtheta3_eqn with respect to theta3(theta2) as diff(theta3(theta2), theta2, theta2)
 
-dr4_eqn = dr4 == diff(r4_eqn);
+dr4_eqn = diff(r4_eqn); % dr4(theta2) represented as diff(r4(theta2), theta2)
 
-dtheta5_eqn = dtheta5 == diff(theta5_eqn);
-ddtheta5_eqn = ddtheta5 == diff(dtheta5_eqn);
+dtheta5_eqn = diff(theta5_eqn); % dtheta5(theta2) represented as diff(theta5(theta2), theta2))
+ddtheta5_eqn = diff(dtheta5_eqn); % ddtheta5(theta2) represented as diff(theta5(theta2), theta2, theta2)
 
-dr6_eqn = dr6 == diff(r6_eqn);
+dr6_eqn = diff(r6_eqn); % dr6 represented as diff(r6(theta2), theta2)
 %% Calculate Values %%
-theta2_num = 89;
-vpa(subs(theta3_eqn, theta2, theta2_num))
+theta2_num = 180;
+theta3_num = subs(180 + theta3_eqn, theta2, theta2_num);
+% theta3 eqn substitution with a numerical theta 2. 180 is a correction factor for the atan func
+
+dtheta3_num = vpa(subs(dtheta3_eqn, theta2, theta2_num));
+
 
 %% Plot vars;
 
