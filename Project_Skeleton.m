@@ -1,15 +1,18 @@
-%% Project Skeleton Code
+%% Project Skeleton Code %%
 
 clear; clc; close all;
 
 %%initial parameter: unit: m, degree, rad/sec
-r1 = 7.8*10^(-2); % m  o2o3
-r2 = 2.5*10^(-2); % m  o2a2
-% and so on ...
+r1 = 7.8*10^(-2); % o2o3
+r2 = 2.5*10^(-2); % o2a2
+r3 = 13.8*10^(-2); % o3B
+r5 = 4.75*10^(-2); % BC
+r7 = 17.1*10^(-2); % o4o3
 
-theta2 = 0:1:360; % from 0 to 360 with step 1: [0,1,2,3,4....360]
-dtheta2 = -30;
-ddtheta2 = 0; 
+%theta2 = 0:1:360; % from 0 to 360 with step 1: [0,1,2,3,4....360]
+syms theta2;
+dtheta2 = 1800; % deg/s from 300 rpm
+ddtheta2 = 0; % constant angular velocity
 
 % TIPS:  
 
@@ -22,8 +25,12 @@ ddtheta2 = 0;
 
 %% Part 1- Calculations for kinematic variables, caculated based on loop closure eqn
 
-r3 = % ENTER YOUR CODE HERE %
-theta3 = % ENTER YOUR CODE HERE %
+theta3 = atand((-sin(theta2))/(3.12 + cosd(theta2)));
+r4 = (2.5*sind(theta2)) / (sind(theta_3));
+
+theta5 = acosd((r7 - r3*cosd(180-theta3)) / (r5)) + 180;
+r6 = r3*sind(180-theta3) - r5*sin(theta5-180);
+
 % Hint: Check if the angle needs to be adjusted to its true value
 % Hint: Check this for all other angles too
 
@@ -31,11 +38,15 @@ theta3 = % ENTER YOUR CODE HERE %
 % and solve them for dtheta3, dtheta5 & dr6
 % and the same for the second derivatives. 
 
-dtheta3 = % ENTER YOUR CODE HERE %
-ddtheta3 = % ENTER YOUR CODE HERE %
+dtheta3 = diff(theta3);
+ddtheta3 = diff(dtheta3);
 
-% and so on
+d_r4 = diff(r4);
 
+dtheta5 = diff(theta5);
+ddtheta5 = diff(dtheta5);
+
+d_r6 = diff(r6);
 %% Plot vars;
 
 % Plot all desired deliverables. 
@@ -46,8 +57,6 @@ grid on;
 title('$\theta_3$ vs $\theta_2$', 'Interpreter','latex')
 xlabel('\theta_2   unit: degree')
 ylabel('\theta_3   unit: degree')
-
-% and so on
  
 % *****************************************************
 %% Part 2 - Force and Moment Calculation
