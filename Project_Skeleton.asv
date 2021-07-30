@@ -238,25 +238,25 @@ for theta2 = 0:1:360
     F56x = x(2);
     F56x_list = [F56x_list; F56x];
     F56y = x(3);
-    F56y_list = [F56y_list; F56y];
+    Fij_list = [Fij_list; F];
     F35x = x(4);
-    F35x_list = [F35x_list; F35x];
+    Fij_list = [Fij_list; F];
     F35y = x(5);
-    F35y_list = [F35y_list; F35y];
+    Fij_list = [Fij_list; F];
     F34 = x(6);
-    F34_list = [F34_list; F34];
+    Fij_list = [Fij_list; F];
     F13x = x(7);
-    F13x_list = [F13x_list; F13x];
+    Fij_list = [Fij_list; F];
     F13y = x(8);
-    F13y_list = [F13y_list; F13y];
+    Fij_list = [Fij_list; F];
     F24x = x(9);
-    F24x_list = [F24x_list; F24x];
+    Fij_list = [Fij_list; F];
     F24y = x(10);
-    F24y_list = [F24y_list; F24y];
+    Fij_list = [Fij_list; F];
     F12x = x(11);
-    F12x_list = [F12x_list; F12x];
+    Fij_list = [Fij_list; F];
     F12y = x(12);
-    F12y_list = [F12y_list; F12y];
+    Fij_list = [Fij_list; F];
     M12 = x(13);
     M12_list = [M12_list; M12];
     
@@ -264,7 +264,7 @@ for theta2 = 0:1:360
     % Atan is defined on [-pi/2; pi/2]. 
     % This if clause will help to adjust the value of the angle 
     % to its true value:	
-    F_list = [F_list; F];
+    Fij_list = [Fij_list; F];
 
     
     % Directions of all forces:    
@@ -303,7 +303,7 @@ ylabel('M12   unit: N-m')
 theta2_rad = deg2rad(theta2_list);
 
 figure (4)
-polarplot(Fij_alpha,F_list)
+polarplot(Fij_alpha,Fij_list)
 grid on;
 title('F_{ij} polar plot')
 
