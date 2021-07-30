@@ -2,75 +2,166 @@
 
 clear; clc; close all;
 
-%%initial parameter: unit: m, degree, rad/sec
+%% initial parameters
+
+%link lengths, units of metres
 r1 = 7.8*10^(-2); % o2o3
 r2 = 2.5*10^(-2); % o2a2
 r3 = 13.8*10^(-2); % o3B
 r5 = 4.75*10^(-2); % BC
 r7 = 17.1*10^(-2); % o4o3
 
-%theta2 = 0:1:360; % from 0 to 360 with step 1: [0,1,2,3,4....360]
-syms theta2;
+syms t theta2(t) theta3(t) r4(t) theta5(t) r6(t); %establishes variables are all functions of t
+
+% link 2 movement
 dtheta2 = 1800; % deg/s from 300 rpm
-ddtheta2 = 0; % constant angular velocity
+ddtheta2 = 0; %#ok<NASGU> % constant angular velocity
+theta2(t) = t*dtheta2; % theta2 value 
 
-% TIPS:  
+%% Part 1- Calculations for kinematic variables, using LCEs
+% Found using link closure equations as detailed in the report
 
-% cosd(x) - is a cosine of x, where x in degrees
-% cos(x) - is a cosine of x, where x in radians
-% using '.*' enables element-wise multiplication
-% accordingly, '.^' element-wise exponent
-% [a1 a2 a3].^[b1 b2 b3] = [a1*b1 a2*b2 a3*b3]
-% '*' is matrix multiplication
+theta3(t) = atand((r2*sind(theta2(t)))/(r2*cosd(theta2(t))-r1))+180;
 
-%% Part 1- Calculations for kinematic variables, caculated based on loop closure eqn
+r4(t)=(r2*cosd(theta2(t))-r1)/cosd(theta3(t));
 
-%theta3 = atand((-sin(theta2))/(3.12 + cosd(theta2)));
-%r4 = (2.5*sind(theta2)) / (sind(theta_3));
+theta5(t) = acosd((r7+r3*cosd(theta3(t))) / r5);
 
-%theta5 = acosd((r7 - r3*cosd(180-theta3)) / (r5)) + 180;
-%r6 = r3*sind(180-theta3) - r5*sin(theta5-180);
+r6(t) = - r5*sind(theta5(t)) + r3*sind(theta3(t));
 
- -Sylvia- I made slightly different equations, let me know what you think. I checked them all and they work. r6 results as always positive.
-theta3 = atand((r2*sind(theta2))/(r2*cosd(theta2)-r1))+180
-r4=(r2*cosd(theta2)-r1)/cosd(theta3)
+%% Derivative equations of kinematic vars (d/dt) 
+syms dtheta3(t) ddtheta3(t) dr4(t) dtheta5(t) ddtheta5(t) dr6(t) ddr6(t)
 
-theta5 = acosd((r7+r3*cosd(theta3))/r5)
-r6 = r5*sind(theta5)-r3*sind(theta3)
+dtheta3(t) = diff(theta3(t), t); % differentiates theta3_eqn with respect to t
+ddtheta3(t) = diff(dtheta3(t), t); % differentiates dtheta3_eqn with respect to t
 
-% Hint: Check if the angle needs to be adjusted to its true value
-% Hint: Check this for all other angles too
+%similar processes for the rest of the variables
 
-%% Take time derivative of loop eqn (d/dt) 
-% and solve them for dtheta3, dtheta5 & dr6
-% and the same for the second derivatives. 
+dr4(t) = diff(r4(t), t);
+ddr4(t) = diff(dr4(t), t);
 
-dtheta3 = diff(theta3);
-ddtheta3 = diff(dtheta3);
+dtheta5(t) = diff(theta5(t), t);
+ddtheta5(t) = diff(dtheta5(t), t);
 
-d_r4 = diff(r4);
+dr6(t) = diff(r6(t), t);
+ddr6(t) = diff(dr6, t);
 
-dtheta5 = diff(theta5);
-ddtheta5 = diff(dtheta5);
+%% Calculate Values %%
+tscale = 100; % scale factor for time (100 means hundredths, etc.
+end_time = 60; % number of time increments to calculate
 
-d_r6 = diff(r6);
+% preallocation of arrays for the first-order values
+theta3_array = zeros(end_time, 1);
+theta5_array = zeros(end_time, 1);
+
+r4_array = zeros(end_time, 1);
+r6_array = zeros(end_time, 1);
+
+% preallocation of arrays for first-derivative values
+dtheta3_array = zeros(end_time, 1);
+dtheta5_array = zeros(end_time, 1);
+
+dr4_array = zeros(end_time, 1);
+dr6_array = zeros(end_time, 1);
+
+% preallocation of arrays for the second-derivative values
+t_array = zeros(end_time, 1);
+ddtheta3_array = zeros(end_time, 1);
+ddtheta5_array = zeros(end_time, 1);
+
+ddr4_array = zeros(end_time, 1);
+ddr6_array = zeros(end_time, 1);
+
+for s = 1:1:end_time % calculates values over the course of t=0.01s to 1/end_time seconds - starts at 1 so we can store to arrays immediately
+    t_array(s) = (s/tscale);
+    
+%first order values calculated first
+    theta3_array(s) = subs(theta3(t), t, s/tscale); % substitutes in the time value for the current loop for t, stores the result in 
+    theta5_array(s) = subs(theta5(t), t, s/tscale);
+    
+    r4_array(s) = subs(r4(t), t, s/tscale);
+    r6_array(s) = subs(r6(t), t, s/tscale);
+    
+% first-order derivative terms
+    dtheta3_array(s) = subs(dtheta3(t), t, s/tscale);
+    dtheta5_array(s) = subs(dtheta5(t), t, s/tscale);
+    
+    dr4_array(s) = subs(dr4(t), t, s/tscale);
+    dr6_array(s) = subs(dr6(t), t, s/tscale);
+    
+% second-order derivative term calculations
+    ddtheta3_array(s) = subs(ddtheta3(t), t, s/tscale);
+    ddtheta5_array(s) = subs(ddtheta5(t), t, s/tscale);
+    
+    ddr4_array(s) = subs(ddr4(t), t, s/tscale);
+    ddr6_array(s) = subs(ddr6(t), t, s/tscale);
+end
+
 %% Plot vars;
 
 % Plot all desired deliverables. 
+% Plotting first-order values first again
 
-figure (1)
-plot(theta2,theta3)
+% theta3, theta5 plotted against time
+figure (1);
+plot(t_array, theta3_array, t_array, theta5_array); % plots both theta3 and theta5 on the same chart, both because they're closely related and to not have twelve plots total
 grid on;
-title('$\theta_3$ vs $\theta_2$', 'Interpreter','latex')
-xlabel('\theta_2   unit: degree')
-ylabel('\theta_3   unit: degree')
+title('$time$ vs $\theta_3$, $\theta_5$', 'Interpreter','latex');
+xlabel('time (s)');
+ylabel('\theta_3, \theta_5 (degrees)');
+legend('\theta_3', '\theta_5');
+
+% r4 and r6 plotted against time
+figure (2);
+plot(t_array, r4_array, t_array, r6_array);
+grid on;
+title('$time$ vs $R_4$, $R_6$', 'Interpreter','latex');
+xlabel('time (s)');
+ylabel('R_4, R_6 (m)');
+legend('R_4', 'R_6');
+
+% Plotting first-derivative values
+figure (3);
+plot(t_array, dtheta3_array, t_array, dtheta5_array);
+grid on;
+title('$time$ vs d$\theta_3$, d$\theta_5$', 'Interpreter','latex');
+xlabel('time (s)');
+ylabel('d\theta_3, d\theta_5 (degrees/s)');
+legend('d\theta_3', 'd\theta_5');
+
+% dr4 and dr6 plotted against time
+figure (4);
+plot(t_array, dr4_array, t_array, dr6_array);
+grid on;
+title('$time$ vs d$R_4$, d$R_6$', 'Interpreter','latex');
+xlabel('time (s)');
+ylabel('dR_4, dR_6 (m/s)');
+legend('dR_4', 'dR_6');
+
+% Plotting second-derivative values
+
+figure (5);
+plot(t_array, ddtheta3_array, t_array, ddtheta5_array);
+grid on;
+title('$time$ vs $d^2\theta_3$, $d^2\theta_5$', 'Interpreter','latex');
+xlabel('time (s)');
+ylabel('d^2\theta_3, d^2\theta_5 (degrees/s^2)');
+legend('d^2\theta_3', 'd^2\theta_5');
+
+figure (6);
+plot(t_array, ddr4_array, t_array, ddr6_array);
+grid on;
+title('$time$ vs $d^2R_4$, $d^2R_6$', 'Interpreter','latex');
+xlabel('time (s)');
+ylabel('d^2R_4, d^2R_6 (m/s^2)');
+legend('d^2R_4', 'd^2R_6');
  
 % *****************************************************
 %% Part 2 - Force and Moment Calculation
 
 %%initial parameters:
 
-dtheta2 = -15; % theta2 dot
+dtheta2 = 1800; % theta2 dot
 ddtheta2 = 0; % theta2 doble-dot - second derivative
 
 rho = 2.7/1000; % density, kg/cm3
@@ -81,11 +172,11 @@ m3 = pi*(r^2)*rho*r3*100 ; % link 3, O3B, kg
 m5 = pi*(r^2)*rho*r5*100 ; % link 5, BC, kg
 m4 = 5/1000 ; % slider 4, kg
 m6 = 5/1000 ; % slider 6, kg
-%Moment of Inertia Formula: I = 1/12*m*L^2;
-IG2 = m2*(r2^2)/12; %MOI, link 2, kg*m^2
-IG3 = m3*(r3^2)/12; %MOI, link 3, kg*m^2
-IG5 = m5*(r5^2)/12; %MOI, link 5, kg*m^2
 
+%Formula: I = 1/12*m*L^2;
+IG5 = m5*(r5^2)/12; %Moment of Inertia, link 5, kg*m^2
+IG3 = m3*(r3^2)/12; %MOI, link 3, kg*m^2
+IG2 = m2*(r2^2)/12; %MOI, link 2, kg*m^2
 
 M12_list = [];
 theta2_list = [];
@@ -99,9 +190,22 @@ Fij_alpha = []; % Angles at which forces are acting
 for theta2 = 0:1:360
 
     % kinematic variables are caculated based on loop eqn
-    r3 = % ENTER YOUR CODE HERE %;
-    dr3 = % ENTER YOUR CODE HERE %;
-    ddtheta3 = % ENTER YOUR CODE HERE %;
+    syms RG2(t) V2(t) A2(t) RG3(t) V3(t) A3(t)
+    syms RG4(t) V4(t) A4(t) RG5(t) V5(t) A5(t) RG6(t) V6(t) A6(t)
+    % kinematic variables are caculated based on loop eqn
+    RG2(t) = [r2/2*cosd(theta2(t)) , r2/2*sind(theta2(t))];
+    V2(t) = diff(RG2(t),t);
+    A2(t) = diff(RG2(t),t,2);
+    RG3(t) = [r1 + r3/2*cosd(theta3(t)) , r3/2*sind(theta3(t))];
+    V3(t) = diff(RG3(t),t);
+    A3(t) = diff(RG3(t),t,2);
+    RG4(t) = [r2*cosd(theta2(t)) , r2*sind(theta2(t))];
+    V4(t) = diff(RG4(t),t);
+    A4(t) = diff(RG4(t),t,2);
+    RG5(t) = [r1-r7+r5/2*cosd(theta5(t)) , r6+r5/2*sind(theta5(t))];
+    V5(t) = diff(RG5(t),t);
+    A5(t) = diff(RG5(t),t,2);
+    RG6(t) = 
 
 % and so on    
 

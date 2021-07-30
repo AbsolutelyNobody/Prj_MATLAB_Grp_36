@@ -6,7 +6,6 @@ function ma = get_ma_vector(%m_i, ... % these are the examples of the possible i
         % ddr_i, ...
         % I_Gi);
 
-% ENTER YOUR CODE HERE %
 m6*ag5x=F35x-F65x
 m6*ag5y=F35y-F65y
 IG5*a5=-(F35x+F65x)*sind(theta5)*r5/2 + (F35y+F65y)*cosd(theta5)*r5/2
