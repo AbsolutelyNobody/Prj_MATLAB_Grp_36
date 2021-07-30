@@ -1,0 +1,106 @@
+%% Part 2 - Force and Moment Calculation
+
+%%initial parameters:
+
+dtheta2 = 1800; % theta2 dot
+ddtheta2 = 0; % theta2 double-dot - second derivative
+
+rho = % ENTER YOUR CODE HERE %; % density, gr/cm3
+d = % ENTER YOUR CODE HERE %; % diameter, cm
+
+m2 = % ENTER YOUR CODE HERE % ; % link 2, o2a2 kg
+I_G4 = % ENTER YOUR CODE HERE %;
+% and so on
+
+
+M12_list = [];
+theta2_list = [];
+Fs_list = [];  % shaking force
+alpha_s_list = []; % direction of a shaking force
+Ms_list =[]; % Shaking moment
+Fij_list = []; % Forces
+Fij_alpha = []; % Angles at which forces are acting
+
+
+for theta2 = 0:1:360
+
+    % kinematic variables are caculated based on loop eqn
+    r3 = % ENTER YOUR CODE HERE %;
+    dr3 = % ENTER YOUR CODE HERE %;
+    ddtheta3 = % ENTER YOUR CODE HERE %;
+
+% and so on    
+
+    B = get_ma_vector(%m_i, ... % these are the examples of the possible input
+        % ri ... % Only include the inputs that are necessary
+        % theta_i ...
+        % dtheta_i ...
+        % ddtheta_i ...
+        % ddr_i, ...
+        % I_Gi);
+    
+    A = get_A_matrix(%m_i, ... % these are the examples of the possible input
+        % ri ... % Only include the inputs that are necessary
+        % theta_i ...
+        % dtheta_i ...
+        % ddtheta_i ...
+        % ddr_i, ...
+        % I_Gi);
+
+    x = A\ B; % Ax = B, solution for x; note that in MATLAB: A\B = B/A
+    
+    % M12:
+    M12 = x(% ENTER YOUR CODE HERE%);
+    M12_list = [M12_list; M12];
+    
+    Fijx = x(% ENTER YOUR CODE HERE%);
+    Fijy = x(% ENTER YOUR CODE HERE%);
+    
+    % Magnitudes of all forces: 
+    % Atan is defined on [-pi/2; pi/2]. 
+    % This if clause will help to adjust the value of the angle 
+    % to its true value:	
+    Fij_list = [Fij_list; % ENTER YOUR CODE HERE%];
+
+    
+    % Directions of all forces:    
+    fx = % ENTER YOUR CODE HERE%;
+    fy = % ENTER YOUR CODE HERE%;
+    alpha_f = atan(fx\fy);
+    if fx < 0
+        alpha_f = alpha_f + pi;
+    end 
+    Fij_alpha = [Fij_alpha; alpha_f];
+
+    % and so on
+    
+  
+    % Collecting the values of theta2:
+    theta2_list = [theta2_list, theta2];
+     
+   
+    
+end
+
+
+% Regular and Polar plots:
+% Might have to transpose the Force vectors for polar plot. Do so if needed
+% Polar plot only works with radians so will have to do it accordingly
+
+figure (3)
+plot(theta2_list,M12_list)
+grid on;
+title('M_{12} vs \theta_2')
+xlabel('\theta_2   unit: degree')
+ylabel('M12   unit: N-m')
+
+
+% Convert degrees to the radians
+theta2_rad = deg2rad(theta2_list);
+
+figure (4)
+polarplot(Fij_alpha,Fij_list)
+grid on;
+title('F_{ij} polar plot')
+
+% and so on ...
