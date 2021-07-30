@@ -7,11 +7,12 @@ r3 = 13.8*10^(-2); % o3B
 r5 = 4.75*10^(-2); % BC
 r7 = 17.1*10^(-2); % o4o3
 
-syms theta2 theta3(theta2) r4(theta2) theta5(theta2) r6(theta2);
+syms t theta2(t) theta3(t) r4(t) theta5(t) r6(t); %establishes variables are all functions of t
 
 % link 2 movement
 dtheta2 = 1800; % deg/s from 300 rpm
 ddtheta2 = 0; % constant angular velocity
+theta2(t) = t*dtheta2 % theta2 value 
 
 % TIPS:  
 
@@ -24,7 +25,8 @@ ddtheta2 = 0; % constant angular velocity
 
 %% Part 1- Calculations for kinematic variables, using LCEs
 % Found using link closure equations as detailed in the report
-theta3_eqn = theta3 == atand((-sind(theta2))/(3.12 + cosd(theta2)));
+theta3_eqn = theta3(t) == atand((-sind(theta2(t)))/(3.12 + cosd(theta2(t))))
+
 r4_eqn = r4 == (2.5*sind(theta2)) / (sind(theta3));
 
 theta5_eqn = theta5 == acosd((r7 - r3*cosd(180-theta3)) / (r5)) + 180;
@@ -36,29 +38,24 @@ r6_eqn = r6 == r3*sind(180-theta3) - r5*sind(theta5-180);
 %% Derivative equations of kinematic vars (d/dt) 
 syms dtheta3 ddtheta3 dr4 dtheta5 ddtheta5 dr6
 
-dtheta3_eqn = diff(theta3_eqn); % differentiates theta3_eqn with respect to theta3(theta2) as diff(theta3(theta2), theta2)
-ddtheta3_eqn = diff(dtheta3_eqn); % differentiates dtheta3_eqn with respect to theta3(theta2) as diff(theta3(theta2), theta2, theta2)
-
-dr4_eqn = diff(r4_eqn); % dr4(theta2) represented as diff(r4(theta2), theta2)
-
-dtheta5_eqn = diff(theta5_eqn); % dtheta5(theta2) represented as diff(theta5(theta2), theta2))
-ddtheta5_eqn = diff(dtheta5_eqn); % ddtheta5(theta2) represented as diff(theta5(theta2), theta2, theta2)
-
-dr6_eqn = diff(r6_eqn); % dr6 represented as diff(r6(theta2), theta2)
+dtheta3_eqn = diff(theta3_eqn, t); % differentiates theta3_eqn with respect to t
+ddtheta3_eqn = diff(dtheta3_eqn, t); % differentiates dtheta3_eqn with respect to t
+% 
+% dr4_eqn = diff(r4_eqn); % dr4(theta2) represented as diff(r4(theta2), theta2)
+% 
+% dtheta5_eqn = diff(theta5_eqn); % dtheta5(theta2) represented as diff(theta5(theta2), theta2))
+% ddtheta5_eqn = diff(dtheta5_eqn); % ddtheta5(theta2) represented as diff(theta5(theta2), theta2, theta2)
+% 
+% dr6_eqn = diff(r6_eqn); % dr6 represented as diff(r6(theta2), theta2)
 %% Calculate Values %%
-
-theta3_array = ones(360, 1);
-% theta3_array = [zeroes, 360, 1];
-
- x = ones(10, 10);
-  x_eqn = subs(theta3_eqn, theta2, 2)
- 
-% for deg = 0:20
-%     theta2_num = deg;
-%     %theta3_num = vpa(180 + solve(subs(theta3_eqn, theta2, theta2_num), theta3))
-%   
-%     %theta3_array(deg) = theta3_num
-% end
+subs(theta3_eqn, t, 0.2)
+%for s = 0:20 % calculates values over the course of 20 seconds
+%     theta2_num = t*dtheta2; % establish numerical value of theta2
+%     
+%     theta3_num = vpa(180 + solve(subs(theta3_eqn, t, s), theta3))
+  
+    %theta3_array(deg) = theta3_num
+%end
 
 % theta3 eqn substitution with a numerical theta 2. 180 is a correction factor for the atan func
 
