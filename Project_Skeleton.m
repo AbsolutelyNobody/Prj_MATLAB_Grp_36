@@ -17,20 +17,20 @@ syms t theta2(t) theta3(t) r4(t) theta5(t) r6(t); %establishes variables are all
 % link 2 movement
 dtheta2 = 1800; % deg/s from 300 rpm
 ddtheta2 = 0; % constant angular velocity
-theta2(t) = t*dtheta2 % theta2 value 
+theta2(t) = t*dtheta2; % theta2 value 
 
 %% Part 1- Calculations for kinematic variables, using LCEs
 % Found using link closure equations as detailed in the report
-theta3(t) = atand((r2*sind(theta2(t)))/(r2*cosd(theta2(t))-r1))+180
+theta3(t) = atand((r2*sind(theta2(t)))/(r2*cosd(theta2(t))-r1))+180;
 
-r4(t) = (r2*cosd(theta2(t))-r1)/cosd(theta3(t))
+r4(t) = (r2*cosd(theta2(t))-r1)/cosd(theta3(t));
 
-theta5(t) = acosd((r7+r3*cosd(theta3(t)))/r5(t))
+theta5(t) = acosd((r7+r3*cosd(theta3(t)))/r5(t));
 
-r6(t) = r5(t)*sind(theta5(t))-r3*sind(theta3(t))
+r6(t) = r5(t)*sind(theta5(t))-r3*sind(theta3(t));
 
 %% Derivative equations of kinematic vars (d/dt) 
-syms dtheta3 ddtheta3 dr4 dtheta5 ddtheta5 dr6
+syms dtheta3 ddtheta3 dr4 dtheta5 ddtheta5 dr6;
 
 dtheta3_eqn = diff(theta3_eqn, t); % differentiates theta3_eqn with respect to t
 ddtheta3_eqn = diff(dtheta3_eqn, t); % differentiates dtheta3_eqn with respect to t
