@@ -212,22 +212,26 @@ for theta2 = 0:1:360
 
     B = get_ma_vector(m2,m3,m4,m5,m6,ag2x,ag2y,ag3x,ag3y,ag4x,ag4y,ag5x,ag5y,ag6x,ag6y,IG3,IG5,ddtheta3(t),ddtheta5(t));
     
-    A = get_A_matrix(%m_i, ... % these are the examples of the possible input
-        % ri ... % Only include the inputs that are necessary
-        % theta_i ...
-        % dtheta_i ...
-        % ddtheta_i ...
-        % ddr_i, ...
-        % I_Gi);
+    A = get_A_matrix(theta5(t),r5,theta3(t),r3,theta2(t),r2)
 
     x = A\ B; % Ax = B, solution for x; note that in MATLAB: A\B = B/A
     
     % M12:
-    M12 = x(% ENTER YOUR CODE HERE%);
+    M12 = x(13);
     M12_list = [M12_list; M12];
     
-    Fijx = x(% ENTER YOUR CODE HERE%);
-    Fijy = x(% ENTER YOUR CODE HERE%);
+    F16x = x(1);
+    F56x = x(2);
+    F56y = x(3);
+    F35x = x(4);
+    F35y = x(5);
+    F34 = x(6);
+    F13x = x(7);
+    F13y = x(8);
+    F24x = x(9);
+    F24y = x(10);
+    F12x = x(11);
+    F12y = x(12);
     
     % Magnitudes of all forces: 
     % Atan is defined on [-pi/2; pi/2]. 
