@@ -5,7 +5,7 @@
 dtheta2 = 1800; % theta2 dot
 ddtheta2 = 0; % theta2 double-dot - second derivative
 
-rho = % ENTER YOUR CODE HERE %; % density, gr/cm3
+rho = 2.7; % density, gr/cm3
 d = % ENTER YOUR CODE HERE %; % diameter, cm
 
 m2 = % ENTER YOUR CODE HERE % ; % link 2, o2a2 kg
