@@ -26,7 +26,7 @@ theta2(t) = t*dtheta2; % theta2 value
 %% Part 1- Calculations for kinematic variables, using LCEs
 % Found using link closure equations as detailed in the report
 
-theta3(t) = atand((r2*sind(theta2(t)))/(r2*cosd(theta2(t))-r1))+180
+theta3(t) = atand((r2*sind(theta2(t)))/(r2*cosd(theta2(t))-r1))+180;
 
 r4(t)=(r2*cosd(theta2(t))-r1)/cosd(theta3(t));
 
@@ -53,37 +53,61 @@ dr6(t) = diff(r6(t), t);
 ddr6(t) = diff(dr6, t);
 
 %% Calculate Values %%
+tscale = 100; % scale factor for time (100 means hundredths, etc.
+end_time = 20; % number of time increments to calculate
 
-theta3_array = ones(20, 1);
+% preallocation of arrays for the first-order values
+theta3_array = zeros(end_time, 1);
+theta5_array = zeros(end_time, 1);
+r4_array = zeros(end_time, 1);
+r6_array = zeros(end_time, 1);
 
-for s = 1:20 % calculates values over the course of 20 seconds
+% preallocation of arrays for first-derivative values
+dtheta3_array = zeros(end_time, 1);
+dtheta5_array = zeros(end_time, 1);
 
-%     theta2_num = t*dtheta2; % establish numerical value of theta2
-    theta3_array(s) = subs(theta3(t), t, s);
-%     theta3_num = vpa(180 + solve(subs(theta3_eqn, t, s), theta3))
-  
-    %theta3_array(deg) = theta3_num
+dr4_array = zeros(end_time, 1);
+dr6_array = zeros(end_time, 1);
+
+% preallocation of arrays for the second-derivative values
+t_array = zeros(end_time, 1)
+ddtheta3_array = zeros(end_time, 1);
+ddtheta5_array = zeros(end_time, 1);
+
+ddr4_array = zeros(end_time, 1);
+ddr6_array = zeros(end_time, 1);
+
+for s = 1:1:end_time % calculates values over the course of t=0.01s to 0.90s
+    t_array(s) = (s/tscale)
+    
+%first order values calculated first
+    theta3_array(s) = subs(theta3(t), t, s/tscale);
+    theta5_array(s) = subs(theta5(t), t, s/tscale);
+    
+    r4_array(s) = subs(r4(t), t, s/tscale);
+    r6_array(s) = subs(r6(t), t, s/tscale);
+    
+% first-order derivative terms
+    dtheta3_array(s) = subs(dtheta3(t), t, s/tscale);
+    dtheta5_array(s) = subs(dtheta5(t), t, s/tscale);
+    
+    dr4_array(s) = subs(dr4(t), t, s/tscale);
+    dr6_array(s) = subs(dr6(t), t, s/tscale);
+    
+% second-order derivative term calculations
+    ddtheta3_array(s) = subs(ddtheta3(t), t, s/tscale);
+    ddtheta5_array(s) = subs(ddtheta5(t), t, s/tscale);
+    
+    ddr4_array(s) = subs(ddr4(t), t, s/tscale);
+    ddr6_array(s) = subs(ddr6(t), t, s/tscale);
 end
-
-theta3_array
-
-% theta3 eqn substitution with a numerical theta 2. 180 is a correction factor for the atan func
-
-% dtheta3_num = subs(dtheta3_eqn, theta2, theta2_num);
-% 
-% ddtheta3_num = subs(ddtheta3_eqn, theta2, theta2_num);
-% 
-% r4_num = subs(r4_eqn, theta2, theta2_num);
-% 
-% dr4_num = subs(dr4_eqn, theta2, theta2_num);
-
 
 %% Plot vars;
 
 % Plot all desired deliverables. 
 % 
 % figure (1)
-% plot(theta2_num, theta3_num)
+% plot(t, theta3_array)
 % grid on;
 % title('$\theta_3$ vs $\theta_2$', 'Interpreter','latex')
 % xlabel('\theta_2   unit: degree')
