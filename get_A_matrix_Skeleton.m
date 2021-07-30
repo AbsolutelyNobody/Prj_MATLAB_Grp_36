@@ -1,19 +1,27 @@
 function A = get_A_matrix(theta5,r5,theta3,r3,theta2,r2)
 
+AS5=sind(theta5)*r5/2
+AC5=cosd(theta5)*r5/2
+AST3=sind(theta3)
+ACT3=cosd(theta3)
+AS3=sind(theta3)*r3/2
+AC3=cosd(theta3)*r3/2
+AS2=sind(theta2)*r2/2
+AC2=cosd(theta2)*r2/2
 
 A = [ 1,1,0,0,0,0,0,0,0,0,0,0,0;
       0,0,1,0,0,0,0,0,0,0,0,0,0;
       0,-1,0,1,0,0,0,0,0,0,0,0,0;
       0,0,-1,0,1,0,0,0,0,0,0,0,0;
-      0,-sind(theta5)*r5/2,cosd(theta5)*r5/2,-sind(theta5)*r5/2,cosd(theta5)*r5/2,0,0,0,0,0,0,0,0;
-      0,0,0,-1,0,cosd(theta3),1,0,0,0,0,0,0;
-      0,0,0,0,-1,sind(theta3),0,1,0,0,0,0,0;
-      0,0,0,sind(theta3)*r3/2,-cosd(theta3)*r3/2,0,sind(theta3)*r3/2,-cosd(theta3)*r3/2,0,0,0,0,0;
-      0,0,0,0,0,-cosd(theta3),0,0,1,0,0,0,0;
-      0,0,0,0,0,-sind(theta3),0,0,0,1,0,0,0;
+      0,-AS5,AC5,-AS5,AC5,0,0,0,0,0,0,0,0;
+      0,0,0,-1,0,ACT3,1,0,0,0,0,0,0;
+      0,0,0,0,-1,AST3,0,1,0,0,0,0,0;
+      0,0,0,AS3,-AC3,0,AS3,-AC3,0,0,0,0,0;
+      0,0,0,0,0,-ACT3,0,0,1,0,0,0,0;
+      0,0,0,0,0,-AST3,0,0,0,1,0,0,0;
       0,0,0,0,0,0,0,0,-1,0,1,0,0;
       0,0,0,0,0,0,0,0,0,-1,0,1,0;
-      0,0,0,0,0,0,0,0,sind(theta2)*r2/2,-cosd(theta2)*r2/2,sind(theta2)*r2/2,-cosd(theta2)*r2/2,1;
+      0,0,0,0,0,0,0,0,AS2,-AC2,AS2,-AC2,1;
     ];
 
 end
