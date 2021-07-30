@@ -26,7 +26,7 @@ theta2(t) = t*dtheta2; % theta2 value
 %% Part 1- Calculations for kinematic variables, using LCEs
 % Found using link closure equations as detailed in the report
 
-theta3(t) = atand((r2*sind(theta2(t)))/(r2*cosd(theta2(t))-r1))+180;
+theta3(t) = atand((r2*sind(theta2(t)))/(r2*cosd(theta2(t))-r1))+180
 
 r4(t)=(r2*cosd(theta2(t))-r1)/cosd(theta3(t));
 
@@ -59,13 +59,13 @@ theta3_array = ones(20, 1);
 for s = 1:20 % calculates values over the course of 20 seconds
 
 %     theta2_num = t*dtheta2; % establish numerical value of theta2
-    theta3_array(s) = subs(theta3(t), t, s)
+    theta3_array(s) = subs(theta3(t), t, s);
 %     theta3_num = vpa(180 + solve(subs(theta3_eqn, t, s), theta3))
   
     %theta3_array(deg) = theta3_num
 end
 
-theta3_array;
+theta3_array
 
 % theta3 eqn substitution with a numerical theta 2. 180 is a correction factor for the atan func
 

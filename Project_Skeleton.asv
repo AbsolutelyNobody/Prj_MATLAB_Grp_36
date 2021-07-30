@@ -33,21 +33,20 @@ r6(t) = r5(t)*sind(theta5(t))-r3*sind(theta3(t))
 %% Derivative equations of kinematic vars (d/dt) 
 syms dtheta3 ddtheta3 dr4 ddr4 dtheta5 ddtheta5 dr6
 
-dtheta3(t) = diff(theta3(t), t); % differentiates theta3_eqn with respect to t
-ddtheta3(t) = diff(theta3(t), t, 2); % differentiates dtheta3_eqn with respect to t
+dtheta = diff(theta3_eqn, t); % differentiates theta3_eqn with respect to t
+ddtheta3 = diff(dtheta3_eqn, t); % differentiates dtheta3_eqn with respect to t
 
-dr4(t) = diff(r4(t), t);
-ddr4(t) = diff(r4(t), t, 2);
+dr4(t) = diff(r4(t), t); % dr4(theta2) represented as diff(r4(theta2), theta2)
+ddr4(t) = diff(r4(t), t, 2)
 
-dtheta5(t) = diff(theta5(t), t);
-ddtheta5(t) = diff(theta5(t), t, 2);
+dtheta5_eqn = diff(theta5_eqn); % dtheta5(theta2) represented as diff(theta5(theta2), theta2))
+ddtheta5_eqn = diff(dtheta5_eqn); % ddtheta5(theta2) represented as diff(theta5(theta2), theta2, theta2)
 
-dr6(t) = diff(r6(t), t);
-ddr6(t) = diff(r6(t), t, 2);
+dr6_eqn = diff(r6_eqn); % dr6 represented as diff(r6(theta2), theta2)
 
 %% Calculate Values %%
 
-theta3_array = ones(20);
+theta3_array = ones(20,20);
 
 for s = 0:20 % calculates values over the course of 20 seconds
 %     theta2_num = t*dtheta2; % establish numerical value of theta2
