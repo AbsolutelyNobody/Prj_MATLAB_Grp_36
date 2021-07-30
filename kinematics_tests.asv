@@ -50,8 +50,8 @@ dr6_eqn = diff(r6_eqn); % dr6 represented as diff(r6(theta2), theta2)
 theta3_array = ones(360, 1);
 % theta3_array = [zeroes, 360, 1];
 
- x = ones(10, 10);
-  x_eqn = subs(theta3_eqn, theta2, 2)
+
+  x = sosubs(theta3_eqn, theta2, 2)
  
 % for deg = 0:20
 %     theta2_num = deg;
