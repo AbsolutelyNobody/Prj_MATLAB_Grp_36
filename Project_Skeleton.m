@@ -27,7 +27,7 @@ r4(t)=(r2*cosd(theta2(t))-r1)/cosd(theta3(t));
 
 theta5(t) = acosd((r7+r3*cosd(theta3(t))) / r5);
 
-r6(t) = r5*sind(theta5(t)) - r3*sind(theta3(t));
+r6(t) = - r5*sind(theta5(t)) + r3*sind(theta3(t));
 
 %% Derivative equations of kinematic vars (d/dt) 
 syms dtheta3(t) ddtheta3(t) dr4(t) dtheta5(t) ddtheta5(t) dr6(t) ddr6(t)
