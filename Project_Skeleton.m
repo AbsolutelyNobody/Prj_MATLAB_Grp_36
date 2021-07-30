@@ -6,9 +6,9 @@ clear; clc; close all;
 %% initial parameters
 
 %link lengths, units of metres
-r1 = 7.8*10^(-2); % o2o3
-r2 = 2.5*10^(-2); % o2a2
-r3 = 13.8*10^(-2); % o3B
+r1 = 7.8*10^(-2); % O2O3
+r2 = 2.5*10^(-2); % O2A2
+r3 = 13.8*10^(-2); % O3B
 r5 = 4.75*10^(-2); % BC
 r7 = 17.1*10^(-2); % O4O3
 
