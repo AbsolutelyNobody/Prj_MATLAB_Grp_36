@@ -2,10 +2,13 @@
 
 clear; clc; close all;
 
-%%initial parameter: unit: m, degree, rad/sec
-r1 = 7.8*10^(-2); % O2O3
-r2 = 2.5*10^(-2); % O2A2
-r3 = 13.8*10^(-2); % O3B
+
+%% initial parameters
+
+%link lengths, units of metres
+r1 = 7.8*10^(-2); % o2o3
+r2 = 2.5*10^(-2); % o2a2
+r3 = 13.8*10^(-2); % o3B
 r5 = 4.75*10^(-2); % BC
 r7 = 17.1*10^(-2); % O4O3
 
@@ -14,44 +17,53 @@ syms t theta2(t) theta3(t) r4(t) theta5(t) r6(t); %establishes variables are all
 % link 2 movement
 dtheta2 = 1800; % deg/s from 300 rpm
 ddtheta2 = 0; % constant angular velocity
-theta2(t) = t*dtheta2; % theta2 value 
+theta2(t) = t*dtheta2 % theta2 value 
 
-
-%% Part 1- Calculations for kinematic variables, caculated based on loop closure eqn
-
+%% Part 1- Calculations for kinematic variables, using LCEs
+% Found using link closure equations as detailed in the report
 theta3(t) = atand((r2*sind(theta2(t)))/(r2*cosd(theta2(t))-r1))+180
+
 r4(t) = (r2*cosd(theta2(t))-r1)/cosd(theta3(t))
 
 theta5(t) = acosd((r7+r3*cosd(theta3(t)))/r5(t))
+
 r6(t) = r5(t)*sind(theta5(t))-r3*sind(theta3(t))
 
+%% Derivative equations of kinematic vars (d/dt) 
+syms dtheta3 ddtheta3 dr4 dtheta5 ddtheta5 dr6
 
-%% Take time derivative of loop eqn (d/dt) 
-% and solve them for dtheta3, dtheta5 & dr6
-% and the same for the second derivatives. 
+dtheta3_eqn = diff(theta3_eqn, t); % differentiates theta3_eqn with respect to t
+ddtheta3_eqn = diff(dtheta3_eqn, t); % differentiates dtheta3_eqn with respect to t
 
-dtheta3 = diff(theta3,t);
-ddtheta3 = diff(theta3,t,2);
+dr4_eqn = diff(r4_eqn); % dr4(theta2) represented as diff(r4(theta2), theta2)
 
-d_r4 = diff(r4,t);
-dd_r4 = diff(r4,t,2);
+dtheta5_eqn = diff(theta5_eqn); % dtheta5(theta2) represented as diff(theta5(theta2), theta2))
+ddtheta5_eqn = diff(dtheta5_eqn); % ddtheta5(theta2) represented as diff(theta5(theta2), theta2, theta2)
 
-dtheta5 = diff(theta5,t);
-ddtheta5 = diff(theta5,t,2);
+dr6_eqn = diff(r6_eqn); % dr6 represented as diff(r6(theta2), theta2)
 
-d_r6 = diff(r6,t);
-dd_r6 = diff(r6,t,2);
+%% Calculate Values %%
+
+theta3_array = ones(20,20);
+
+for s = 0:20 % calculates values over the course of 20 seconds
+%     theta2_num = t*dtheta2; % establish numerical value of theta2
+    theta3_array(s) = subs(theta3_eqn, t, 1);
+%     theta3_num = vpa(180 + solve(subs(theta3_eqn, t, s), theta3))
+  
+    %theta3_array(deg) = theta3_num
+end
 
 %% Plot vars;
 
 % Plot all desired deliverables. 
-
-figure (1)
-plot(theta2,theta3)
-grid on;
-title('$\theta_3$ vs $\theta_2$', 'Interpreter','latex')
-xlabel('\theta_2   unit: degree')
-ylabel('\theta_3   unit: degree')
+% 
+% figure (1)
+% plot(theta2_num, theta3_num)
+% grid on;
+% title('$\theta_3$ vs $\theta_2$', 'Interpreter','latex')
+% xlabel('\theta_2   unit: degree')
+% ylabel('\theta_3   unit: degree')
  
 % *****************************************************
 %% Part 2 - Force and Moment Calculation
