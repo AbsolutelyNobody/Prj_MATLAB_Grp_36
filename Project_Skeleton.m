@@ -6,9 +6,9 @@ clear; clc; close all;
 %% initial parameters
 
 %link lengths, units of metres
-r1 = 7.8*10^(-2); % o2o3
-r2 = 2.5*10^(-2); % o2a2
-r3 = 13.8*10^(-2); % o3B
+r1 = 7.8*10^(-2); % O2O3
+r2 = 2.5*10^(-2); % O2A2
+r3 = 13.8*10^(-2); % O3B
 r5 = 4.75*10^(-2); % BC
 r7 = 17.1*10^(-2); % O4O3
 
@@ -24,11 +24,11 @@ theta2(t) = t*dtheta2 % theta2 value
 
 theta3(t) = atand((r2*sind(theta2(t)))/(r2*cosd(theta2(t))-r1))+180
 
-r4(t) = (r2*cosd(theta2(t))-r1)/cosd(theta3(t))
+r4(t) = (r2*cosd(theta2(t))-r1)/cosd(theta3(t));
 
-theta5(t) = acosd((r7+r3*cosd(theta3(t)))/r5(t))
+theta5(t) = acosd((r7+r3*cosd(theta3(t)))/r5(t));
 
-r6(t) = r5(t)*sind(theta5(t))-r3*sind(theta3(t))
+r6(t) = r5(t)*sind(theta5(t))-r3*sind(theta3(t));
 
 %% Derivative equations of kinematic vars (d/dt) 
 syms dtheta3 ddtheta3 dr4 ddr4 dtheta5 ddtheta5 dr6
