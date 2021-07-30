@@ -190,9 +190,22 @@ Fij_alpha = []; % Angles at which forces are acting
 for theta2 = 0:1:360
 
     % kinematic variables are caculated based on loop eqn
-    r3 = % ENTER YOUR CODE HERE %;
-    dr3 = % ENTER YOUR CODE HERE %;
-    ddtheta3 = % ENTER YOUR CODE HERE %;
+    syms RG2(t) V2(t) A2(t) RG3(t) V3(t) A3(t)
+    syms RG4(t) V4(t) A4(t) RG5(t) V5(t) A5(t) RG6(t) V6(t) A6(t)
+    % kinematic variables are caculated based on loop eqn
+    RG2(t) = [r2/2*cosd(theta2(t)) , r2/2*sind(theta2(t))];
+    V2(t) = diff(RG2(t),t);
+    A2(t) = diff(RG2(t),t,2);
+    RG3(t) = [r1 + r3/2*cosd(theta3(t)) , r3/2*sind(theta3(t))];
+    V3(t) = diff(RG3(t),t);
+    A3(t) = diff(RG3(t),t,2);
+    RG4(t) = [r2*cosd(theta2(t)) , r2*sind(theta2(t))];
+    V4(t) = diff(RG4(t),t);
+    A4(t) = diff(RG4(t),t,2);
+    RG5(t) = [r1-r7+r5/2*cosd(theta5(t)) , r6+r5/2*sind(theta5(t))];
+    V5(t) = diff(RG5(t),t);
+    A5(t) = diff(RG5(t),t,2);
+    RG6(t) = 
 
 % and so on    
 
