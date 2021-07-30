@@ -2,6 +2,7 @@
 
 clear; clc; close all;
 
+
 %% initial parameters
 
 %link lengths, units of metres
@@ -9,7 +10,7 @@ r1 = 7.8*10^(-2); % o2o3
 r2 = 2.5*10^(-2); % o2a2
 r3 = 13.8*10^(-2); % o3B
 r5 = 4.75*10^(-2); % BC
-r7 = 17.1*10^(-2); % o4o3
+r7 = 17.1*10^(-2); % O4O3
 
 syms t theta2(t) theta3(t) r4(t) theta5(t) r6(t); %establishes variables are all functions of t
 
@@ -18,39 +19,29 @@ dtheta2 = 1800; % deg/s from 300 rpm
 ddtheta2 = 0; % constant angular velocity
 theta2(t) = t*dtheta2 % theta2 value 
 
-% TIPS:  
-
-% cosd(x) - is a cosine of x, where x in degrees
-% cos(x) - is a cosine of x, where x in radians
-% using '.*' enables element-wise multiplication
-% accordingly, '.^' element-wise exponent
-% [a1 a2 a3].^[b1 b2 b3] = [a1*b1 a2*b2 a3*b3]
-% '*' is matrix multiplication
-
 %% Part 1- Calculations for kinematic variables, using LCEs
 % Found using link closure equations as detailed in the report
-theta3_eqn = theta3(t) == atand((-sind(theta2(t)))/(3.12 + cosd(theta2(t))))
+theta3(t) = atand((r2*sind(theta2(t)))/(r2*cosd(theta2(t))-r1))+180
 
-r4_eqn = r4 == (2.5*sind(theta2)) / (sind(theta3));
+r4(t) = (r2*cosd(theta2(t))-r1)/cosd(theta3(t))
 
-theta5_eqn = theta5 == acosd((r7 - r3*cosd(180-theta3)) / (r5)) + 180;
-r6_eqn = r6 == r3*sind(180-theta3) - r5*sind(theta5-180);
+theta5(t) = acosd((r7+r3*cosd(theta3(t)))/r5(t))
 
-% Hint: Check if the angle needs to be adjusted to its true value
-% Hint: Check this for all other angles too
+r6(t) = r5(t)*sind(theta5(t))-r3*sind(theta3(t))
 
 %% Derivative equations of kinematic vars (d/dt) 
 syms dtheta3 ddtheta3 dr4 dtheta5 ddtheta5 dr6
 
 dtheta3_eqn = diff(theta3_eqn, t); % differentiates theta3_eqn with respect to t
 ddtheta3_eqn = diff(dtheta3_eqn, t); % differentiates dtheta3_eqn with respect to t
-% 
-% dr4_eqn = diff(r4_eqn); % dr4(theta2) represented as diff(r4(theta2), theta2)
-% 
-% dtheta5_eqn = diff(theta5_eqn); % dtheta5(theta2) represented as diff(theta5(theta2), theta2))
-% ddtheta5_eqn = diff(dtheta5_eqn); % ddtheta5(theta2) represented as diff(theta5(theta2), theta2, theta2)
-% 
-% dr6_eqn = diff(r6_eqn); % dr6 represented as diff(r6(theta2), theta2)
+
+dr4_eqn = diff(r4_eqn); % dr4(theta2) represented as diff(r4(theta2), theta2)
+
+dtheta5_eqn = diff(theta5_eqn); % dtheta5(theta2) represented as diff(theta5(theta2), theta2))
+ddtheta5_eqn = diff(dtheta5_eqn); % ddtheta5(theta2) represented as diff(theta5(theta2), theta2, theta2)
+
+dr6_eqn = diff(r6_eqn); % dr6 represented as diff(r6(theta2), theta2)
+
 %% Calculate Values %%
 
 theta3_array = ones(20,20);
@@ -62,19 +53,6 @@ for s = 0:20 % calculates values over the course of 20 seconds
   
     %theta3_array(deg) = theta3_num
 end
-
-theta3_array
-
-% theta3 eqn substitution with a numerical theta 2. 180 is a correction factor for the atan func
-
-% dtheta3_num = subs(dtheta3_eqn, theta2, theta2_num);
-% 
-% ddtheta3_num = subs(ddtheta3_eqn, theta2, theta2_num);
-% 
-% r4_num = subs(r4_eqn, theta2, theta2_num);
-% 
-% dr4_num = subs(dr4_eqn, theta2, theta2_num);
-
 
 %% Plot vars;
 
@@ -92,15 +70,21 @@ theta3_array
 
 %%initial parameters:
 
-dtheta2 = -15; % theta2 dot
+dtheta2 = 1800; % theta2 dot
 ddtheta2 = 0; % theta2 doble-dot - second derivative
 
-rho = % ENTER YOUR CODE HERE %; % density, gr/cm3
-d = % ENTER YOUR CODE HERE %; % diameter, cm
+rho = 2.7/1000; % density, kg/cm3
+r = 0.25; % radius, cm
 
-m2 = % ENTER YOUR CODE HERE % ; % link 2, o2a2 kg
-I_G4 = % ENTER YOUR CODE HERE %;
-% and so on
+m2 = pi*(r^2)*rho*r2*100 ; % link 2, O2A2, kg
+m3 = pi*(r^2)*rho*r3*100 ; % link 3, O3B, kg
+m5 = pi*(r^2)*rho*r5*100 ; % link 5, BC, kg
+m4 = 5/1000 ; % slider 4, kg
+m6 = 5/1000 ; % slider 6, kg
+%Formula: I = 1/12*m*L^2;
+IG5 = m5*(r5^2)/12; %Moment of Inertia, link 5, kg*m^2
+IG3 = m3*(r3^2)/12; %MOI, link 3, kg*m^2
+IG2 = m2*(r2^2)/12; %MOI, link 2, kg*m^2
 
 
 M12_list = [];
