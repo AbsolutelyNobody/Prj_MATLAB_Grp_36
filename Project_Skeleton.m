@@ -172,11 +172,11 @@ m3 = pi*(r^2)*rho*r3*100 ; % link 3, O3B, kg
 m5 = pi*(r^2)*rho*r5*100 ; % link 5, BC, kg
 m4 = 5/1000 ; % slider 4, kg
 m6 = 5/1000 ; % slider 6, kg
+
 %Formula: I = 1/12*m*L^2;
 IG5 = m5*(r5^2)/12; %Moment of Inertia, link 5, kg*m^2
 IG3 = m3*(r3^2)/12; %MOI, link 3, kg*m^2
 IG2 = m2*(r2^2)/12; %MOI, link 2, kg*m^2
-
 
 M12_list = [];
 theta2_list = [];
