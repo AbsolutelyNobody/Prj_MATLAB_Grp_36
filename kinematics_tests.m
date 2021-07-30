@@ -54,11 +54,12 @@ ddr6(t) = diff(dr6, t);
 
 %% Calculate Values %%
 tscale = 100; % scale factor for time (100 means hundredths, etc.
-end_time = 20; % number of time increments to calculate
+end_time = 60; % number of time increments to calculate
 
 % preallocation of arrays for the first-order values
 theta3_array = zeros(end_time, 1);
 theta5_array = zeros(end_time, 1);
+
 r4_array = zeros(end_time, 1);
 r6_array = zeros(end_time, 1);
 
@@ -70,7 +71,7 @@ dr4_array = zeros(end_time, 1);
 dr6_array = zeros(end_time, 1);
 
 % preallocation of arrays for the second-derivative values
-t_array = zeros(end_time, 1)
+t_array = zeros(end_time, 1);
 ddtheta3_array = zeros(end_time, 1);
 ddtheta5_array = zeros(end_time, 1);
 
@@ -78,7 +79,7 @@ ddr4_array = zeros(end_time, 1);
 ddr6_array = zeros(end_time, 1);
 
 for s = 1:1:end_time % calculates values over the course of t=0.01s to 0.90s
-    t_array(s) = (s/tscale)
+    t_array(s) = (s/tscale);
     
 %first order values calculated first
     theta3_array(s) = subs(theta3(t), t, s/tscale);
@@ -105,10 +106,58 @@ end
 %% Plot vars;
 
 % Plot all desired deliverables. 
-% 
-% figure (1)
-% plot(t, theta3_array)
-% grid on;
-% title('$\theta_3$ vs $\theta_2$', 'Interpreter','latex')
-% xlabel('\theta_2   unit: degree')
-% ylabel('\theta_3   unit: degree')
+% Plotting first-order values first again
+
+% theta3, theta5 plotted against time
+figure (1);
+plot(t_array, theta3_array, t_array, theta5_array);
+grid on;
+title('$time$ vs $\theta_3$, $\theta_5$', 'Interpreter','latex');
+xlabel('time (s)');
+ylabel('\theta_3, \theta_5 (degrees)');
+legend('\theta_3', '\theta_5');
+
+% r4 and r6 plotted against time
+figure (2);
+plot(t_array, r4_array, t_array, r6_array);
+grid on;
+title('$time$ vs $R_4$, $R_6$', 'Interpreter','latex');
+xlabel('time (s)');
+ylabel('R_4, R_6 (m)');
+legend('R_4', 'R_6');
+
+% Plotting first-derivative values
+figure (3);
+plot(t_array, dtheta3_array, t_array, dtheta5_array);
+grid on;
+title('$time$ vs d$\theta_3$, d$\theta_5$', 'Interpreter','latex');
+xlabel('time (s)');
+ylabel('d\theta_3, d\theta_5 (degrees/s)');
+legend('d\theta_3', 'd\theta_5');
+
+% dr4 and dr6 plotted against time
+figure (4);
+plot(t_array, dr4_array, t_array, dr6_array);
+grid on;
+title('$time$ vs d$R_4$, d$R_6$', 'Interpreter','latex');
+xlabel('time (s)');
+ylabel('dR_4, dR_6 (m/s)');
+legend('dR_4', 'dR_6');
+
+% Plotting second-derivative values
+
+figure (5);
+plot(t_array, ddtheta3_array, t_array, ddtheta5_array);
+grid on;
+title('$time$ vs $d^2\theta_3$, $d^2\theta_5$', 'Interpreter','latex');
+xlabel('time (s)');
+ylabel('d^2\theta_3, d^2\theta_5 (degrees/s^2)');
+legend('d^2\theta_3', 'd^2\theta_5');
+
+figure (6);
+plot(t_array, ddr4_array, t_array, ddr6_array);
+grid on;
+title('$time$ vs $d^2R_4$, $d^2R_6$', 'Interpreter','latex');
+xlabel('time (s)');
+ylabel('d^2R_4, d^2R_6 (m/s^2)');
+legend('d^2R_4', 'd^2R_6');
