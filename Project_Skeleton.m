@@ -52,14 +52,18 @@ ddtheta3_eqn = diff(dtheta3_eqn, t); % differentiates dtheta3_eqn with respect t
 % 
 % dr6_eqn = diff(r6_eqn); % dr6 represented as diff(r6(theta2), theta2)
 %% Calculate Values %%
-subs(theta3_eqn, t, 1)
-%for s = 0:20 % calculates values over the course of 20 seconds
+
+theta3_array = ones(20,20);
+
+for s = 0:20 % calculates values over the course of 20 seconds
 %     theta2_num = t*dtheta2; % establish numerical value of theta2
-%     
+    theta3_array(s) = subs(theta3_eqn, t, 1);
 %     theta3_num = vpa(180 + solve(subs(theta3_eqn, t, s), theta3))
   
     %theta3_array(deg) = theta3_num
-%end
+end
+
+theta3_array
 
 % theta3 eqn substitution with a numerical theta 2. 180 is a correction factor for the atan func
 
