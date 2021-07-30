@@ -18,10 +18,6 @@ m2*ag2x=F12x-F42x
 m2*ag2y=F12y-F42y
 IG2*ddtheta2= 0 =(F12x+F42x)*sind(theta2)*r2/2 - (F12y+F42y)*cosd(theta2)*r2/2 + M12
 
-%shaking force and moment
-Fsx=-F61x-F21x-F31x
-Fsy=-F21y-F31y
-Ms=-M21-r1*F31y+r6*F61x %only for r6 upwards. don't know what to do about when it is belox the x axis, maybe use vector instead?
 
 ma = [ m6*ag6x ; 
        m6*ag6y ;
