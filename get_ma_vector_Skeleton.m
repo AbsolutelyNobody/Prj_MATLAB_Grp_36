@@ -1,4 +1,4 @@
-function ma = get_ma_vector(m2,m3,m4,m5,m6,ag2x,ag2y,ag3x,ag3y,ag4x,ag4y,ag5x,ag5y,ag6x,ag6y,IG3,IG5,ddtheta3(t),ddtheta5(t));
+function ma = get_ma_vector(m2,m3,m4,m5,m6,ag2x,ag2y,ag3x,ag3y,ag4x,ag4y,ag5x,ag5y,ag6x,ag6y,IG3,IG5,ddtheta3,ddtheta5);
 
 m6*ag6x=F16x+F56x
 m6*ag6y=F56y
