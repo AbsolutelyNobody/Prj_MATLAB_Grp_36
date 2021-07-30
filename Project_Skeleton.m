@@ -205,17 +205,12 @@ for theta2 = 0:1:360
     RG5(t) = [r1-r7+r5/2*cosd(theta5(t)) , r6+r5/2*sind(theta5(t))];
     V5(t) = diff(RG5(t),t);
     A5(t) = diff(RG5(t),t,2);
-    RG6(t) = 
+    RG6(t) = [r1-r7 , r6];
+    V6(t) = diff(RG6(t),t);
+    A6(t) = diff(RG6(t),t,2);
 
-% and so on    
 
-    B = get_ma_vector(%m_i, ... % these are the examples of the possible input
-        % ri ... % Only include the inputs that are necessary
-        % theta_i ...
-        % dtheta_i ...
-        % ddtheta_i ...
-        % ddr_i, ...
-        % I_Gi);
+    B = get_ma_vector(m2,m3,m4,m5,m6,ag2x,ag2y,ag3x,ag3y,ag4x,ag4y,ag5x,ag5y,ag6x,ag6y,IG3,IG5,ddtheta3(t),ddtheta5(t));
     
     A = get_A_matrix(%m_i, ... % these are the examples of the possible input
         % ri ... % Only include the inputs that are necessary
