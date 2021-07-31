@@ -170,9 +170,12 @@ legend('d^2R_4', 'd^2R_6');
 %% Part 2 - Force and Moment Calculation
 
 syms theta2 theta3(theta2) theta5(theta2) ddtheta3(theta2) ddtheta5(theta2) % redefining variables used in part 1 to be functions of theta2 instead of t
+
 theta3(theta2) = atand((r2*sind(theta2))/(r2*cosd(theta2)-r1))+180;
 theta5(theta2) = acosd((r7+r3*cosd(theta3(theta2))) / r5);
-ddtheta3
+
+ddtheta3(theta2) = diff(theta3(theta2), theta2, 2);
+ddtheta5(theta2) = diff(theta5(theta2), theta2, 2);
 
 %%initial parameters:
 
@@ -202,24 +205,30 @@ Ms_list =[]; % Shaking moment
 F16x_list = [];
 F16_list = [];
 F16_alpha = [];
+
 F56x_list = [];
 F56y_list = [];
 F56_list = [];
 F56_alpha = [];
+
 F35x_list = [];
 F35y_list = [];
 F35_list = [];
 F35_alpha = [];
+
 F34_list = [];
 F34_alpha = [];
+
 F13x_list = [];
 F13y_list = [];
 F13_list = [];
 F13_alpha = [];
+
 F24x_list = [];
 F24y_list = [];
 F24_list = [];
 F24_alpha = [];
+
 F12x_list = [];
 F12y_list = [];
 F12_list = [];
@@ -234,19 +243,23 @@ for theta2 = 0:1:360
     RG2(theta2) = [r2/2*cosd(theta2) , r2/2*sind(theta2)];
     V2(theta2) = diff(RG2(theta2),theta2);
     A2(theta2) = diff(RG2(theta2),theta2,2);
+    
+    
     RG3(theta2) = [r1 + r3/2*cosd(theta3(theta2)) , r3/2*sind(theta3(theta2))];
     V3(theta2) = diff(RG3(theta2),theta2);
     A3(theta2) = diff(RG3(theta2),theta2,2);
+    
     RG4(theta2) = [r2*cosd(theta2) , r2*sind(theta2)];
     V4(theta2) = diff(RG4(theta2),theta2);
     A4(theta2) = diff(RG4(theta2),theta2,2);
+    
     RG5(theta2) = [r1-r7+r5/2*cosd(theta5(theta2)) , r6+r5/2*sind(theta5(theta2))];
     V5(theta2) = diff(RG5(theta2),theta2);
     A5(theta2) = diff(RG5(theta2),theta2,2);
+    
     RG6(theta2) = [r1-r7 , r6];
     V6(theta2) = diff(RG6(theta2),theta2);
     A6(theta2) = diff(RG6(theta2),theta2,2);
-
 
     B = get_ma_vector(m2,m3,m4,m5,m6,ag2x,ag2y,ag3x,ag3y,ag4x,ag4y,ag5x,ag5y,ag6x,ag6y,IG3,IG5,ddtheta3(theta2),ddtheta5(theta2));
     
@@ -351,6 +364,14 @@ for theta2 = 0:1:360
     F13_list = sqrt((F13x_list.^2)+(F13y_list.^2))
     F24_list = sqrt((F24x_list.^2)+(F24y_list.^2))
     F12_list = sqrt((F12x_list.^2)+(F12y_list.^2))
+    
+    %Shaking force from kinetic calculations
+    %Fsx_list = -F16x_list - F12x_list - F13x_list;
+    %Fsy_list = -F12y_list - F13y_list
+    %Fs_list = sqrt((Fsx_list.^2)+(Fsy_list.^2))
+    
+    %Shaking moment from kinetic calculations
+    
     
 end
 
