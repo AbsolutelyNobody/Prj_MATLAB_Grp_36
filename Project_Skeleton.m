@@ -414,42 +414,50 @@ ylabel('M12   unit: N-m');
 theta2_rad = deg2rad(theta2_list);
 
 figure (10);
-polarplot(Fs_alpha,Fs_list);
+Fs_alphar = deg2rad(Fs_alpha);
+polarplot(Fs_alphar,Fs_list);
 grid on;
 title('F_s polar plot');
 
 figure (11);
-polarplot(F16_alpha,F16_list);
+F16_alphar = deg2rad(F16_alpha);
+polarplot(F16_alphar,F16_list);
 grid on;
 title('F_{16} polar plot');
 
 figure (12);
-polarplot(F56_alpha,F56_list);
+F56_alphar = deg2rad(F56_alpha);
+polarplot(F56_alphar,F56_list);
 grid on;
 title('F_{56} polar plot');
 
 figure (13);
-polarplot(F35_alpha,F35_list);
+F35_alphar = deg2rad(F35_alpha);
+polarplot(F35_alphar,F35_list);
 grid on;
 title('F_{35} polar plot');
 
 figure (14);
-polarplot(F34_alpha,F34_list);
+F34_alphar = deg2rad(F34_alpha);
+polarplot(F34_alphar,F34_list);
 grid on;
 title('F_{34} polar plot');
 
 figure (15);
-polarplot(F13_alpha,F13_list);
+F13_alphar = deg2rad(F13_alpha);
+polarplot(F13_alphar,F13_list);
 grid on;
 title('F_{13} polar plot');
 
 figure (16);
-polarplot(F24_alpha,F24_list);
+F24_alphar = deg2rad(F24_alpha);
+polarplot(F24_alphar,F24_list);
 grid on;
 title('F_{24} polar plot');
 
 figure (17);
-polarplot(F12_alpha,F12_list);
+F12_alphar = deg2rad(F12_alpha);
+polarplot(F12_alphar,F12_list);
 grid on;
 title('F_{12} polar plot');
 

@@ -275,7 +275,7 @@ for theta2 = 0:1:360
     ag6x = A6(theta2)*cosd(theta2);
     ag6y = A6(theta2)*sind(theta2);
     
-    B = get_ma_vector(m2,m3,m4,m5,m6,ag2x,ag2y,ag3x,ag3y,ag4x,ag4y,ag5x,ag5y,ag6x,ag6y,IG3,IG5,ddtheta3(theta2),ddtheta5(theta2));
+    B = get_ma_vector_Skeleton(m2,m3,m4,m5,m6,ag2x,ag2y,ag3x,ag3y,ag4x,ag4y,ag5x,ag5y,ag6x,ag6y,IG3,IG5,ddtheta3(theta2),ddtheta5(theta2));
     
     A = get_A_matrix(theta5(theta2),r5,theta3(theta2),r3,theta2,r2);
 
@@ -387,12 +387,12 @@ for theta2 = 0:1:360
     
     %Finding force length from the x and y components:
     F16_list = F16x_list;
-    F56_list = sqrt((F56x_list.^2)+(F56y_list.^2))
-    F35_list = sqrt((F35x_list.^2)+(F35y_list.^2))
-    F13_list = sqrt((F13x_list.^2)+(F13y_list.^2))
-    F24_list = sqrt((F24x_list.^2)+(F24y_list.^2))
-    F12_list = sqrt((F12x_list.^2)+(F12y_list.^2))
-    Fs_list = sqrt((Fsx_list.^2)+(Fsy_list.^2))
+    F56_list = sqrt((F56x_list.^2)+(F56y_list.^2));
+    F35_list = sqrt((F35x_list.^2)+(F35y_list.^2));
+    F13_list = sqrt((F13x_list.^2)+(F13y_list.^2));
+    F24_list = sqrt((F24x_list.^2)+(F24y_list.^2));
+    F12_list = sqrt((F12x_list.^2)+(F12y_list.^2));
+    Fs_list = sqrt((Fsx_list.^2)+(Fsy_list.^2));
     
     
 end
@@ -402,59 +402,64 @@ end
 % Might have to transpose the Force vectors for polar plot. Do so if needed
 % Polar plot only works with radians so will have to do it accordingly
 
-figure (9)
-plot(theta2_list,M12_list)
+figure (9);
+plot(theta2_list,M12_list);
 grid on;
-title('M_{12} vs \theta_2')
-xlabel('\theta_2   unit: degree')
-ylabel('M12   unit: N-m')
+title('M_{12} vs \theta_2');
+xlabel('\theta_2   unit: degree');
+ylabel('M12   unit: N-m');
 
 
 % Convert degrees to the radians
 theta2_rad = deg2rad(theta2_list);
 
-figure (10)
-polarplot(Fij_alpha,F_list)
+figure (10);
+Fs_alphar = deg2rad(Fs_alpha);
+polarplot(Fs_alphar,Fs_list);
 grid on;
-title('F_{ij} polar plot')
+title('F_s polar plot');
 
-figure (11)
-polarplot(Fij_alpha,F_list)
+figure (11);
+F16_alphar = deg2rad(F16_alpha);
+polarplot(F16_alphar,F16_list);
 grid on;
-title('F_{ij} polar plot')
+title('F_{16} polar plot');
 
-figure (12)
-polarplot(Fij_alpha,F_list)
+figure (12);
+F56_alphar = deg2rad(F56_alpha);
+polarplot(F56_alphar,F56_list);
 grid on;
-title('F_{ij} polar plot')
+title('F_{56} polar plot');
 
-figure (13)
-polarplot(Fij_alpha,F_list)
+figure (13);
+F35_alphar = deg2rad(F35_alpha);
+polarplot(F35_alphar,F35_list);
 grid on;
-title('F_{ij} polar plot')
+title('F_{35} polar plot');
 
-figure (4)
-polarplot(Fij_alpha,F_list)
+figure (14);
+F34_alphar = deg2rad(F34_alpha);
+polarplot(F34_alphar,F34_list);
 grid on;
-title('F_{ij} polar plot')
+title('F_{34} polar plot');
 
-figure (4)
-polarplot(Fij_alpha,F_list)
+figure (15);
+F13_alphar = deg2rad(F13_alpha);
+polarplot(F13_alphar,F13_list);
 grid on;
-title('F_{ij} polar plot')
+title('F_{13} polar plot');
 
-figure (4)
-polarplot(Fij_alpha,F_list)
+figure (16);
+F24_alphar = deg2rad(F24_alpha);
+polarplot(F24_alphar,F24_list);
 grid on;
-title('F_{ij} polar plot')
+title('F_{24} polar plot');
 
-figure (4)
-polarplot(Fij_alpha,F_list)
+figure (17);
+F12_alphar = deg2rad(F12_alpha);
+polarplot(F12_alphar,F12_list);
 grid on;
-title('F_{ij} polar plot')
+title('F_{12} polar plot');
 
-figure (4)
-polarplot(Fij_alpha,F_list)
-grid on;
-title('F_{ij} polar plot')
+
 
