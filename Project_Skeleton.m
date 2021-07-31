@@ -387,12 +387,12 @@ for theta2 = 0:1:360
     
     %Finding force length from the x and y components:
     F16_list = F16x_list;
-    F56_list = sqrt((F56x_list.^2)+(F56y_list.^2))
-    F35_list = sqrt((F35x_list.^2)+(F35y_list.^2))
-    F13_list = sqrt((F13x_list.^2)+(F13y_list.^2))
-    F24_list = sqrt((F24x_list.^2)+(F24y_list.^2))
-    F12_list = sqrt((F12x_list.^2)+(F12y_list.^2))
-    Fs_list = sqrt((Fsx_list.^2)+(Fsy_list.^2))
+    F56_list = sqrt((F56x_list.^2)+(F56y_list.^2));
+    F35_list = sqrt((F35x_list.^2)+(F35y_list.^2));
+    F13_list = sqrt((F13x_list.^2)+(F13y_list.^2));
+    F24_list = sqrt((F24x_list.^2)+(F24y_list.^2));
+    F12_list = sqrt((F12x_list.^2)+(F12y_list.^2));
+    Fs_list = sqrt((Fsx_list.^2)+(Fsy_list.^2));
     
     
 end
@@ -402,56 +402,56 @@ end
 % Might have to transpose the Force vectors for polar plot. Do so if needed
 % Polar plot only works with radians so will have to do it accordingly
 
-figure (9)
-plot(theta2_list,M12_list)
+figure (9);
+plot(theta2_list,M12_list);
 grid on;
-title('M_{12} vs \theta_2')
-xlabel('\theta_2   unit: degree')
-ylabel('M12   unit: N-m')
+title('M_{12} vs \theta_2');
+xlabel('\theta_2   unit: degree');
+ylabel('M12   unit: N-m');
 
 
 % Convert degrees to the radians
 theta2_rad = deg2rad(theta2_list);
 
-figure (10)
-polarplot(Fs_alpha,Fs_list)
+figure (10);
+polarplot(Fs_alpha,Fs_list);
 grid on;
-title('F_s polar plot')
+title('F_s polar plot');
 
-figure (11)
-polarplot(F16_alpha,F16_list)
+figure (11);
+polarplot(F16_alpha,F16_list);
 grid on;
-title('F_{16} polar plot')
+title('F_{16} polar plot');
 
-figure (12)
-polarplot(F56_alpha,F56_list)
+figure (12);
+polarplot(F56_alpha,F56_list);
 grid on;
-title('F_{56} polar plot')
+title('F_{56} polar plot');
 
-figure (13)
-polarplot(F35_alpha,F35_list)
+figure (13);
+polarplot(F35_alpha,F35_list);
 grid on;
-title('F_{35} polar plot')
+title('F_{35} polar plot');
 
-figure (14)
-polarplot(F34_alpha,F34_list)
+figure (14);
+polarplot(F34_alpha,F34_list);
 grid on;
-title('F_{34} polar plot')
+title('F_{34} polar plot');
 
-figure (15)
-polarplot(F13_alpha,F13_list)
+figure (15);
+polarplot(F13_alpha,F13_list);
 grid on;
-title('F_{13} polar plot')
+title('F_{13} polar plot');
 
-figure (16)
-polarplot(F24_alpha,F24_list)
+figure (16);
+polarplot(F24_alpha,F24_list);
 grid on;
-title('F_{24} polar plot')
+title('F_{24} polar plot');
 
-figure (17)
-polarplot(F12_alpha,F12_list)
+figure (17);
+polarplot(F12_alpha,F12_list);
 grid on;
-title('F_{12} polar plot')
+title('F_{12} polar plot');
 
 
 
