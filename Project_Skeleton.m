@@ -169,10 +169,11 @@ legend('d^2R_4', 'd^2R_6');
 % *****************************************************
 %% Part 2 - Force and Moment Calculation
 
-syms theta2 theta3(theta2) theta5(theta2) ddtheta3(theta2) ddtheta5(theta2) % redefining variables used in part 1 to be functions of theta2 instead of t
+syms theta2 theta3(theta2) theta5(theta2) ddtheta3(theta2) ddtheta5(theta2) r6(theta2) % redefining variables used in part 1 to be functions of theta2 instead of t
 
 theta3(theta2) = atand((r2*sind(theta2))/(r2*cosd(theta2)-r1))+180;
 theta5(theta2) = acosd((r7+r3*cosd(theta3(theta2))) / r5);
+r6(theta2) = - r5*sind(theta5(theta2)) + r3*sind(theta3(theta2));
 
 ddtheta3(theta2) = diff(theta3(theta2), theta2, 2);
 ddtheta5(theta2) = diff(theta5(theta2), theta2, 2);
@@ -237,7 +238,7 @@ F12y_list = [];
 F12_list = [];
 F12_alpha = [];
 
-for theta2 = 0:1:360
+for theta2 = 0:1:20
 
     % kinematic variables are caculated based on loop eqn
     syms RG2(theta2) V2(theta2) A2(theta2) RG3(theta2) V3(theta2) A3(theta2)
@@ -264,22 +265,32 @@ for theta2 = 0:1:360
     V6(theta2) = diff(RG6(theta2),theta2);
     A6(theta2) = diff(RG6(theta2),theta2,2);
 
-    ag2x = A2(theta2)*cosd(theta2);
-    ag2y = A2(theta2)*sind(theta2);
-    ag3x = A3(theta2)*cosd(theta2);
-    ag3y = A3(theta2)*sind(theta2);
-    ag4x = A4(theta2)*cosd(theta2);
-    ag4y = A4(theta2)*sind(theta2);
-    ag5x = A5(theta2)*cosd(theta2);
-    ag5y = A5(theta2)*sind(theta2);
-    ag6x = A6(theta2)*cosd(theta2);
-    ag6y = A6(theta2)*sind(theta2);
+    
+    a2_temp = A2(theta2);
+    ag2x = a2_temp(1);
+    ag2y = a2_temp(2);
+    
+    a3_temp = A3(theta2);
+    ag3x = a3_temp(1);
+    ag3y = a3_temp(2);
+    
+    a4_temp = A3(theta2);
+    ag4x = a4_temp(1);
+    ag4y = a4_temp(2);
+    
+    a5_temp = A5(theta2);
+    ag5x = a5_temp(1);
+    ag5y = a5_temp(2);
+    
+    a6_temp = A6(theta2);
+    ag6x = a6_temp(1);
+    ag6y = a6_temp(2);
     
     B = get_ma_vector_Skeleton(m2,m3,m4,m5,m6,ag2x,ag2y,ag3x,ag3y,ag4x,ag4y,ag5x,ag5y,ag6x,ag6y,IG3,IG5,ddtheta3(theta2),ddtheta5(theta2));
+    B = B.'
     
-    A = get_A_matrix(theta5(theta2),r5,theta3(theta2),r3,theta2,r2);
-
-    x = A\ B; % Ax = B, solution for x; note that in MATLAB: A\B = B/A
+    A = get_A_matrix_Skeleton(theta5(theta2),r5,theta3(theta2),r3,theta2,r2);
+    x = A\B; % Ax = B, solution for x; note that in MATLAB: A\B = B/A
     
   % Collecting force magnitudes from x vector and adding to respective lists:
     

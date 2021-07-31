@@ -21,21 +21,19 @@ function ma = get_ma_vector(m2,m3,m4,m5,m6,ag2x,ag2y,ag3x,ag3y,ag4x,ag4y,ag5x,ag
 % m2*ag2y=F12y-F42y
 % IG2*ddtheta2= 0 =(F12x+F42x)*sind(theta2)*r2/2 - (F12y+F42y)*cosd(theta2)*r2/2 + M12
 
-IG2 = 0;
-ddtheta2 = 0; % from initial conditions
+a = m6*ag6x;
+b = m6*ag6y;
+c = m5*ag5x;
+d = m5*ag5y;
+e = IG5*ddtheta5;
+f = m3*ag3x;
+g = m3*ag3y;
+h = IG3*ddtheta3;
+i = m4*ag4x;
+j = m4*ag4y;
+k = m2*ag2x;
+l = m2*ag2y;
+m = 0;
 
-ma = [m6*ag6x ; 
-      m6*ag6y ;
-      m5*ag5x ;
-      m5*ag5y ;
-      IG5*ddtheta5 ;
-      m3*ag3x ;
-      m3*ag3y ;
-      IG3*ddtheta3;
-      m4*ag4x ;
-      m4*ag4y ;
-      m2*ag2x ;
-      m2*ag2y ;
-      IG2*ddtheta2;
-    ];
+ma = [a, b, c, d, e, f, g, h, i, j, k, l, m];
 end
