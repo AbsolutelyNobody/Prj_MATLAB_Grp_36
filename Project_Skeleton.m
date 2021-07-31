@@ -208,24 +208,30 @@ Ms_list =[]; % Shaking moment
 F16x_list = [];
 F16_list = [];
 F16_alpha = [];
+
 F56x_list = [];
 F56y_list = [];
 F56_list = [];
 F56_alpha = [];
+
 F35x_list = [];
 F35y_list = [];
 F35_list = [];
 F35_alpha = [];
+
 F34_list = [];
 F34_alpha = [];
+
 F13x_list = [];
 F13y_list = [];
 F13_list = [];
 F13_alpha = [];
+
 F24x_list = [];
 F24y_list = [];
 F24_list = [];
 F24_alpha = [];
+
 F12x_list = [];
 F12y_list = [];
 F12_list = [];
@@ -240,15 +246,20 @@ for theta2 = 0:1:360
     RG2(theta2) = [r2/2*cosd(theta2) , r2/2*sind(theta2)];
     V2(theta2) = diff(RG2(theta2),theta2);
     A2(theta2) = diff(RG2(theta2),theta2,2);
+    
+    
     RG3(theta2) = [r1 + r3/2*cosd(theta3(theta2)) , r3/2*sind(theta3(theta2))];
     V3(theta2) = diff(RG3(theta2),theta2);
     A3(theta2) = diff(RG3(theta2),theta2,2);
+    
     RG4(theta2) = [r2*cosd(theta2) , r2*sind(theta2)];
     V4(theta2) = diff(RG4(theta2),theta2);
     A4(theta2) = diff(RG4(theta2),theta2,2);
+    
     RG5(theta2) = [r1-r7+r5/2*cosd(theta5(theta2)) , r6+r5/2*sind(theta5(theta2))];
     V5(theta2) = diff(RG5(theta2),theta2);
     A5(theta2) = diff(RG5(theta2),theta2,2);
+    
     RG6(theta2) = [r1-r7 , r6];
     V6(theta2) = diff(RG6(theta2),theta2);
     A6(theta2) = diff(RG6(theta2),theta2,2);
