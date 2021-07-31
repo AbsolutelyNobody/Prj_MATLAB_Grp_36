@@ -195,6 +195,7 @@ As_list = []; % direction of a shaking force
 Ms_list =[]; % Shaking moment
 %List of Forces and the Angles at which forces act%
 F16x_list = [];
+F16_alpha = [];
 F56x_list = [];
 F56y_list = [];
 F56_alpha = [];
@@ -241,7 +242,7 @@ for theta2 = 0:1:360
 
     x = A\ B; % Ax = B, solution for x; note that in MATLAB: A\B = B/A
     
-  % Collecting variables from x vector and adding to respective lists:
+  % Collecting force magnitudes from x vector and adding to respective lists:
     
     F16x = x(1);
     F16x_list = [F16x_list; F16x];
@@ -274,20 +275,59 @@ for theta2 = 0:1:360
     % Atan is defined on [-pi/2; pi/2]. 
     % This if clause will help to adjust the value of the angle 
     % to its true value:	
-    F_list = [F_list; F];
 
     
     % Directions of all forces:    
-    fx = % ENTER YOUR CODE HERE%;
-    fy = % ENTER YOUR CODE HERE%;
+    fx = F16x;
+    fy = 0;
     alpha_f = atan(fx\fy);
     if fx < 0
         alpha_f = alpha_f + pi;
     end 
-    Fij_alpha = [Fij_alpha; alpha_f];
+    F16_alpha = [F16_alpha; alpha_f];
 
-    % and so on
+    fx = F56x;
+    fy = F56y;
+    alpha_f = atan(fx\fy);
+    if fx < 0
+        alpha_f = alpha_f + pi;
+    end 
+    F56_alpha = [F56_alpha; alpha_f];
     
+    fx = F35x;
+    fy = F35y;
+    alpha_f = atan(fx\fy);
+    if fx < 0
+        alpha_f = alpha_f + pi;
+    end 
+    F35_alpha = [F35_alpha; alpha_f];
+    
+    F34_alpha = [F34_alpha; theta3(t)];
+    
+    fx = F13x;
+    fy = F13y;
+    alpha_f = atan(fx\fy);
+    if fx < 0
+        alpha_f = alpha_f + pi;
+    end 
+    F13_alpha = [F13_alpha; alpha_f];
+    
+    fx = F24x;
+    fy = F24y;
+    alpha_f = atan(fx\fy);
+    if fx < 0
+        alpha_f = alpha_f + pi;
+    end 
+    F24_alpha = [F24_alpha; alpha_f];
+
+    fx = F12x;
+    fy = F12y;
+    alpha_f = atan(fx\fy);
+    if fx < 0
+        alpha_f = alpha_f + pi;
+    end 
+    F12_alpha = [F12_alpha; alpha_f];
+
   
     % Collecting the values of theta2:
     theta2_list = [theta2_list, theta2];
@@ -317,4 +357,43 @@ polarplot(Fij_alpha,F_list)
 grid on;
 title('F_{ij} polar plot')
 
-% and so on ...
+figure (4)
+polarplot(Fij_alpha,F_list)
+grid on;
+title('F_{ij} polar plot')
+
+figure (4)
+polarplot(Fij_alpha,F_list)
+grid on;
+title('F_{ij} polar plot')
+
+figure (4)
+polarplot(Fij_alpha,F_list)
+grid on;
+title('F_{ij} polar plot')
+
+figure (4)
+polarplot(Fij_alpha,F_list)
+grid on;
+title('F_{ij} polar plot')
+
+figure (4)
+polarplot(Fij_alpha,F_list)
+grid on;
+title('F_{ij} polar plot')
+
+figure (4)
+polarplot(Fij_alpha,F_list)
+grid on;
+title('F_{ij} polar plot')
+
+figure (4)
+polarplot(Fij_alpha,F_list)
+grid on;
+title('F_{ij} polar plot')
+
+figure (4)
+polarplot(Fij_alpha,F_list)
+grid on;
+title('F_{ij} polar plot')
+
