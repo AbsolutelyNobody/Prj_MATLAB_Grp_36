@@ -250,7 +250,17 @@ for theta2 = 0:1:360
     V6(theta2) = diff(RG6(theta2),theta2);
     A6(theta2) = diff(RG6(theta2),theta2,2);
 
-
+    ag2x = A2(theta2)*cosd(theta2);
+    ag2y = A2(theta2)*sind(theta2);
+    ag3x = A3(theta2)*cosd(theta2);
+    ag3y = A3(theta2)*sind(theta2);
+    ag4x = A4(theta2)*cosd(theta2);
+    ag4y = A4(theta2)*sind(theta2);
+    ag5x = A5(theta2)*cosd(theta2);
+    ag5y = A5(theta2)*sind(theta2);
+    ag6x = A6(theta2)*cosd(theta2);
+    ag6y = A6(theta2)*sind(theta2);
+    
     B = get_ma_vector(m2,m3,m4,m5,m6,ag2x,ag2y,ag3x,ag3y,ag4x,ag4y,ag5x,ag5y,ag6x,ag6y,IG3,IG5,ddtheta3(theta2),ddtheta5(theta2));
     
     A = get_A_matrix(theta5(theta2),r5,theta3(theta2),r3,theta2,r2);
