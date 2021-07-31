@@ -205,7 +205,7 @@ Fsy_list = [];
 As_list = []; % direction of a shaking force
 Ms_list =[]; % Shaking moment
 
-end_degrees = 1
+end_degrees = 360
 
 %List of Forces and the Angles at which forces act%
 F16x_list = zeros(end_degrees)
@@ -241,6 +241,10 @@ F12_list = zeros(end_degrees);
 F12_alpha = zeros(end_degrees);
 
 Fs_alpha = zeros(end_degrees);
+theta2_list = zeros(end_degrees);
+M12_list = zeros(end_degrees);
+Fs_alphar = zeros(end_degrees);
+Fs_list = zeros(end_degrees);
 
 for theta2_deg = 0:1:end_degrees
 
@@ -293,7 +297,7 @@ for theta2_deg = 0:1:end_degrees
     B = subs(get_ma_vector_Skeleton(m2,m3,m4,m5,m6,ag2x,ag2y,ag3x,ag3y,ag4x,ag4y,ag5x,ag5y,ag6x,ag6y,IG3,IG5,ddtheta3(theta2),ddtheta5(theta2)), theta2, theta2_deg)
     B = B.'
     
-    A = subs(get_A_matrix_Skeleton(theta5(theta2),r5,theta3(theta2),r3,theta2,r2), theta2, theta2_deg)
+    A = vpa(subs(get_A_matrix_Skeleton(theta5(theta2),r5,theta3(theta2),r3,theta2,r2), theta2, theta2_deg))
     x = A\B % Ax = B, solution for x; note that in MATLAB: A\B = B/A
     
   % Collecting force magnitudes from x vector and adding to respective lists:
@@ -398,7 +402,7 @@ for theta2_deg = 0:1:end_degrees
 
   
     % Collecting the values of theta2:
-    theta2_list = [theta2_list, theta2]
+    theta2_list = [theta2_list; theta2_deg]
     
     
 end
