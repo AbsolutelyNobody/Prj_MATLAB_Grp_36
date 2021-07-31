@@ -203,22 +203,29 @@ As_list = []; % direction of a shaking force
 Ms_list =[]; % Shaking moment
 %List of Forces and the Angles at which forces act%
 F16x_list = [];
+F16_list = [];
 F16_alpha = [];
 F56x_list = [];
 F56y_list = [];
+F56_list = [];
 F56_alpha = [];
 F35x_list = [];
 F35y_list = [];
+F35_list = [];
 F35_alpha = [];
 F34_list = [];
+F34_alpha = [];
 F13x_list = [];
 F13y_list = [];
+F13_list = [];
 F13_alpha = [];
 F24x_list = [];
 F24y_list = [];
+F24_list = [];
 F24_alpha = [];
 F12x_list = [];
 F12y_list = [];
+F12_list = [];
 F12_alpha = [];
 
 for theta2 = 0:1:360
@@ -339,8 +346,22 @@ for theta2 = 0:1:360
   
     % Collecting the values of theta2:
     theta2_list = [theta2_list, theta2];
-     
-   
+    
+    %Finding force length from the x and y components:
+    F16_list = F16x_list;
+    F56_list = sqrt((F56x_list.^2)+(F56y_list.^2))
+    F35_list = sqrt((F35x_list.^2)+(F35y_list.^2))
+    F13_list = sqrt((F13x_list.^2)+(F13y_list.^2))
+    F24_list = sqrt((F24x_list.^2)+(F24y_list.^2))
+    F12_list = sqrt((F12x_list.^2)+(F12y_list.^2))
+    
+    %Shaking force from kinetic calculations
+    %Fsx_list = -F16x_list - F12x_list - F13x_list;
+    %Fsy_list = -F12y_list - F13y_list
+    %Fs_list = sqrt((Fsx_list.^2)+(Fsy_list.^2))
+    
+    %Shaking moment from kinetic calculations
+    
     
 end
 
