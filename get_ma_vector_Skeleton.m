@@ -21,6 +21,8 @@ function ma = get_ma_vector(m2,m3,m4,m5,m6,ag2x,ag2y,ag3x,ag3y,ag4x,ag4y,ag5x,ag
 % m2*ag2y=F12y-F42y
 % IG2*ddtheta2= 0 =(F12x+F42x)*sind(theta2)*r2/2 - (F12y+F42y)*cosd(theta2)*r2/2 + M12
 
+IG2 = 0;
+ddtheta2 = 0; % from initial conditions
 
 ma = [m6*ag6x ; 
       m6*ag6y ;
