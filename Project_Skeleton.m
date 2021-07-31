@@ -205,46 +205,50 @@ Fsy_list = [];
 As_list = []; % direction of a shaking force
 Ms_list =[]; % Shaking moment
 
+end_degrees = 1
+
 %List of Forces and the Angles at which forces act%
-F16x_list = [];
-F16_list = [];
-F16_alpha = [];
+F16x_list = zeros(end_degrees)
+F16_list = zeros(end_degrees);
+F16_alpha = zeros(end_degrees);
 
-F56x_list = [];
-F56y_list = [];
-F56_list = [];
-F56_alpha = [];
+F56x_list = zeros(end_degrees);
+F56y_list = zeros(end_degrees);
+F56_list = zeros(end_degrees);
+F56_alpha = zeros(end_degrees);
 
-F35x_list = [];
-F35y_list = [];
-F35_list = [];
-F35_alpha = [];
+F35x_list = zeros(end_degrees);
+F35y_list = zeros(end_degrees);
+F35_list = zeros(end_degrees);
+F35_alpha = zeros(end_degrees);
 
-F34_list = [];
-F34_alpha = [];
+F34_list = zeros(end_degrees);
+F34_alpha = zeros(end_degrees);
 
-F13x_list = [];
-F13y_list = [];
-F13_list = [];
-F13_alpha = [];
+F13x_list = zeros(end_degrees);
+F13y_list = zeros(end_degrees);
+F13_list = zeros(end_degrees);
+F13_alpha = zeros(end_degrees);
 
-F24x_list = [];
-F24y_list = [];
-F24_list = [];
-F24_alpha = [];
+F24x_list = zeros(end_degrees);
+F24y_list = zeros(end_degrees);
+F24_list = zeros(end_degrees);
+F24_alpha = zeros(end_degrees);
 
-F12x_list = [];
-F12y_list = [];
-F12_list = [];
-F12_alpha = [];
+F12x_list = zeros(end_degrees);
+F12y_list = zeros(end_degrees);
+F12_list = zeros(end_degrees);
+F12_alpha = zeros(end_degrees);
 
-for theta2 = 0:1:20
+Fs_alpha = zeros(end_degrees);
+
+for theta2_deg = 0:1:end_degrees
 
     % kinematic variables are caculated based on loop eqn
     syms RG2(theta2) V2(theta2) A2(theta2) RG3(theta2) V3(theta2) A3(theta2)
     syms RG4(theta2) V4(theta2) A4(theta2) RG5(theta2) V5(theta2) A5(theta2) RG6(theta2) V6(theta2) A6(theta2)
     % kinematic variables are caculated based on loop eqn
-    RG2(theta2) = [r2/2*cosd(theta2) , r2/2*sind(theta2)];
+    RG2(theta2) = [r2/2*cosd(theta2) , r2/2*sind(theta2)]
     V2(theta2) = diff(RG2(theta2),theta2);
     A2(theta2) = diff(RG2(theta2),theta2,2);
     
@@ -267,7 +271,7 @@ for theta2 = 0:1:20
 
     
     a2_temp = A2(theta2);
-    ag2x = a2_temp(1);
+    ag2x = a2_temp(1)
     ag2y = a2_temp(2);
     
     a3_temp = A3(theta2);
@@ -286,16 +290,16 @@ for theta2 = 0:1:20
     ag6x = a6_temp(1);
     ag6y = a6_temp(2);
     
-    B = get_ma_vector_Skeleton(m2,m3,m4,m5,m6,ag2x,ag2y,ag3x,ag3y,ag4x,ag4y,ag5x,ag5y,ag6x,ag6y,IG3,IG5,ddtheta3(theta2),ddtheta5(theta2));
+    B = subs(get_ma_vector_Skeleton(m2,m3,m4,m5,m6,ag2x,ag2y,ag3x,ag3y,ag4x,ag4y,ag5x,ag5y,ag6x,ag6y,IG3,IG5,ddtheta3(theta2),ddtheta5(theta2)), theta2, theta2_deg)
     B = B.'
     
-    A = get_A_matrix_Skeleton(theta5(theta2),r5,theta3(theta2),r3,theta2,r2);
-    x = A\B; % Ax = B, solution for x; note that in MATLAB: A\B = B/A
+    A = subs(get_A_matrix_Skeleton(theta5(theta2),r5,theta3(theta2),r3,theta2,r2), theta2, theta2_deg)
+    x = A\B % Ax = B, solution for x; note that in MATLAB: A\B = B/A
     
   % Collecting force magnitudes from x vector and adding to respective lists:
     
     F16x = x(1);
-    F16x_list = [F16x_list; F16x];
+    F16x_list = [F16x_list; F16x]
     F56x = x(2);
     F56x_list = [F56x_list; F56x];
     F56y = x(3);
@@ -319,7 +323,7 @@ for theta2 = 0:1:20
     F12y = x(12);
     F12y_list = [F12y_list; F12y];
     M12 = x(13);
-    M12_list = [M12_list; M12];
+    M12_list = [M12_list; M12]
     
     %Shaking Force Equations from kinetic analysis
     Fsx = -F16x - F12x - F13x
@@ -334,7 +338,7 @@ for theta2 = 0:1:20
 
     
     % Directions of all forces:  
-    fx = Fsx;
+    fx = Fsx
     fy = Fsy;
     alpha_f = atan(fx\fy);
     if fx < 0
@@ -394,20 +398,19 @@ for theta2 = 0:1:20
 
   
     % Collecting the values of theta2:
-    theta2_list = [theta2_list, theta2];
+    theta2_list = [theta2_list, theta2]
     
+    
+end
+
     %Finding force length from the x and y components:
-    F16_list = F16x_list;
+    F16_list = F16x_list
     F56_list = sqrt((F56x_list.^2)+(F56y_list.^2));
     F35_list = sqrt((F35x_list.^2)+(F35y_list.^2));
     F13_list = sqrt((F13x_list.^2)+(F13y_list.^2));
     F24_list = sqrt((F24x_list.^2)+(F24y_list.^2));
     F12_list = sqrt((F12x_list.^2)+(F12y_list.^2));
     Fs_list = sqrt((Fsx_list.^2)+(Fsy_list.^2));
-    
-    
-end
-
 
 % Regular and Polar plots:
 % Might have to transpose the Force vectors for polar plot. Do so if needed
