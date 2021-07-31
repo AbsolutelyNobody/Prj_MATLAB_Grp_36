@@ -82,7 +82,7 @@ ddtheta5_array = zeros(end_time, 1);
 ddr4_array = zeros(end_time, 1);
 ddr6_array = zeros(end_time, 1);
 
-for s = 1:1:end_time % calculates values over the course of t=0.01s to 0.90s
+for s = 1:1:end_time % calculates values for each variable from of t=0.01 to end_time/tscale seconds
     t_array(s) = (s/tscale);
     
 %first order values calculated first
@@ -169,6 +169,14 @@ legend('d^2R_4', 'd^2R_6');
 % *****************************************************
 %% Part 2 - Force and Moment Calculation
 
+syms theta2 theta3(theta2) theta5(theta2) ddtheta3(theta2) ddtheta5(theta2) % redefining variables used in part 1 to be functions of theta2 instead of t
+
+theta3(theta2) = atand((r2*sind(theta2))/(r2*cosd(theta2)-r1))+180;
+theta5(theta2) = acosd((r7+r3*cosd(theta3(theta2))) / r5);
+
+ddtheta3(theta2) = diff(theta3(theta2), theta2, 2);
+ddtheta5(theta2) = diff(theta5(theta2), theta2, 2);
+
 %%initial parameters:
 
 dtheta2 = 1800; % theta2 dot
@@ -216,29 +224,29 @@ F12_alpha = [];
 for theta2 = 0:1:360
 
     % kinematic variables are caculated based on loop eqn
-    syms RG2(t) V2(t) A2(t) RG3(t) V3(t) A3(t)
-    syms RG4(t) V4(t) A4(t) RG5(t) V5(t) A5(t) RG6(t) V6(t) A6(t)
+    syms RG2(theta2) V2(theta2) A2(theta2) RG3(theta2) V3(theta2) A3(theta2)
+    syms RG4(theta2) V4(theta2) A4(theta2) RG5(theta2) V5(theta2) A5(theta2) RG6(theta2) V6(theta2) A6(theta2)
     % kinematic variables are caculated based on loop eqn
-    RG2(t) = [r2/2*cosd(theta2(t)) , r2/2*sind(theta2(t))];
-    V2(t) = diff(RG2(t),t);
-    A2(t) = diff(RG2(t),t,2);
-    RG3(t) = [r1 + r3/2*cosd(theta3(t)) , r3/2*sind(theta3(t))];
-    V3(t) = diff(RG3(t),t);
-    A3(t) = diff(RG3(t),t,2);
-    RG4(t) = [r2*cosd(theta2(t)) , r2*sind(theta2(t))];
-    V4(t) = diff(RG4(t),t);
-    A4(t) = diff(RG4(t),t,2);
-    RG5(t) = [r1-r7+r5/2*cosd(theta5(t)) , r6+r5/2*sind(theta5(t))];
-    V5(t) = diff(RG5(t),t);
-    A5(t) = diff(RG5(t),t,2);
-    RG6(t) = [r1-r7 , r6];
-    V6(t) = diff(RG6(t),t);
-    A6(t) = diff(RG6(t),t,2);
+    RG2(theta2) = [r2/2*cosd(theta2) , r2/2*sind(theta2)];
+    V2(theta2) = diff(RG2(theta2),theta2);
+    A2(theta2) = diff(RG2(theta2),theta2,2);
+    RG3(theta2) = [r1 + r3/2*cosd(theta3(theta2)) , r3/2*sind(theta3(theta2))];
+    V3(theta2) = diff(RG3(theta2),theta2);
+    A3(theta2) = diff(RG3(theta2),theta2,2);
+    RG4(theta2) = [r2*cosd(theta2) , r2*sind(theta2)];
+    V4(theta2) = diff(RG4(theta2),theta2);
+    A4(theta2) = diff(RG4(theta2),theta2,2);
+    RG5(theta2) = [r1-r7+r5/2*cosd(theta5(theta2)) , r6+r5/2*sind(theta5(theta2))];
+    V5(theta2) = diff(RG5(theta2),theta2);
+    A5(theta2) = diff(RG5(theta2),theta2,2);
+    RG6(theta2) = [r1-r7 , r6];
+    V6(theta2) = diff(RG6(theta2),theta2);
+    A6(theta2) = diff(RG6(theta2),theta2,2);
 
 
-    B = get_ma_vector(m2,m3,m4,m5,m6,ag2x,ag2y,ag3x,ag3y,ag4x,ag4y,ag5x,ag5y,ag6x,ag6y,IG3,IG5,ddtheta3(t),ddtheta5(t));
+    B = get_ma_vector(m2,m3,m4,m5,m6,ag2x,ag2y,ag3x,ag3y,ag4x,ag4y,ag5x,ag5y,ag6x,ag6y,IG3,IG5,ddtheta3(theta2),ddtheta5(theta2));
     
-    A = get_A_matrix(theta5(t),r5,theta3(t),r3,theta2(t),r2);
+    A = get_A_matrix(theta5(theta2),r5,theta3(theta2),r3,theta2,r2);
 
     x = A\ B; % Ax = B, solution for x; note that in MATLAB: A\B = B/A
     
@@ -302,7 +310,7 @@ for theta2 = 0:1:360
     end 
     F35_alpha = [F35_alpha; alpha_f];
     
-    F34_alpha = [F34_alpha; theta3(t)];
+    F34_alpha = [F34_alpha; theta3(theta2)];
     
     fx = F13x;
     fy = F13y;
