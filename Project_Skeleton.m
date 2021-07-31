@@ -402,7 +402,7 @@ end
 % Might have to transpose the Force vectors for polar plot. Do so if needed
 % Polar plot only works with radians so will have to do it accordingly
 
-figure (3)
+figure (9)
 plot(theta2_list,M12_list)
 grid on;
 title('M_{12} vs \theta_2')
@@ -413,48 +413,45 @@ ylabel('M12   unit: N-m')
 % Convert degrees to the radians
 theta2_rad = deg2rad(theta2_list);
 
-figure (4)
-polarplot(Fij_alpha,F_list)
+figure (10)
+polarplot(Fs_alpha,Fs_list)
 grid on;
-title('F_{ij} polar plot')
+title('F_s polar plot')
 
-figure (4)
-polarplot(Fij_alpha,F_list)
+figure (11)
+polarplot(F16_alpha,F16_list)
 grid on;
-title('F_{ij} polar plot')
+title('F_{16} polar plot')
 
-figure (4)
-polarplot(Fij_alpha,F_list)
+figure (12)
+polarplot(F56_alpha,F56_list)
 grid on;
-title('F_{ij} polar plot')
+title('F_{56} polar plot')
 
-figure (4)
-polarplot(Fij_alpha,F_list)
+figure (13)
+polarplot(F35_alpha,F35_list)
 grid on;
-title('F_{ij} polar plot')
+title('F_{35} polar plot')
 
-figure (4)
-polarplot(Fij_alpha,F_list)
+figure (14)
+polarplot(F34_alpha,F34_list)
 grid on;
-title('F_{ij} polar plot')
+title('F_{34} polar plot')
 
-figure (4)
-polarplot(Fij_alpha,F_list)
+figure (15)
+polarplot(F13_alpha,F13_list)
 grid on;
-title('F_{ij} polar plot')
+title('F_{13} polar plot')
 
-figure (4)
-polarplot(Fij_alpha,F_list)
+figure (16)
+polarplot(F24_alpha,F24_list)
 grid on;
-title('F_{ij} polar plot')
+title('F_{24} polar plot')
 
-figure (4)
-polarplot(Fij_alpha,F_list)
+figure (17)
+polarplot(F12_alpha,F12_list)
 grid on;
-title('F_{ij} polar plot')
+title('F_{12} polar plot')
 
-figure (4)
-polarplot(Fij_alpha,F_list)
-grid on;
-title('F_{ij} polar plot')
+
 

@@ -199,8 +199,11 @@ IG2 = m2*(r2^2)/12; %MOI, link 2, kg*m^2
 M12_list = [];
 theta2_list = [];
 Fs_list = [];  % shaking force
+Fsx_list = [];
+Fsy_list = [];
 As_list = []; % direction of a shaking force
 Ms_list =[]; % Shaking moment
+
 %List of Forces and the Angles at which forces act%
 F16x_list = [];
 F16_list = [];
@@ -309,7 +312,9 @@ for theta2 = 0:1:360
     
     %Shaking Force Equations from kinetic analysis
     Fsx = -F16x - F12x - F13x
+    Fsx_list = [Fsx_list; Fsx];
     Fsy = -F12y - F13y
+    Fsy_list = [Fsy_list; Fsy];
     
     % Magnitudes of all forces: 
     % Atan is defined on [-pi/2; pi/2]. 
@@ -324,7 +329,7 @@ for theta2 = 0:1:360
     if fx < 0
         alpha_f = alpha_f + pi;
     end 
-    Fs_alpha = [F16_alpha; alpha_f];
+    Fs_alpha = [Fs_alpha; alpha_f];
     
     fx = F16x;
     fy = 0;
@@ -387,13 +392,7 @@ for theta2 = 0:1:360
     F13_list = sqrt((F13x_list.^2)+(F13y_list.^2))
     F24_list = sqrt((F24x_list.^2)+(F24y_list.^2))
     F12_list = sqrt((F12x_list.^2)+(F12y_list.^2))
-    
-    %Shaking force from kinetic calculations
-    %Fsx_list = -F16x_list - F12x_list - F13x_list;
-    %Fsy_list = -F12y_list - F13y_list
-    %Fs_list = sqrt((Fsx_list.^2)+(Fsy_list.^2))
-    
-    %Shaking moment from kinetic calculations
+    Fs_list = sqrt((Fsx_list.^2)+(Fsy_list.^2))
     
     
 end
@@ -403,7 +402,7 @@ end
 % Might have to transpose the Force vectors for polar plot. Do so if needed
 % Polar plot only works with radians so will have to do it accordingly
 
-figure (3)
+figure (9)
 plot(theta2_list,M12_list)
 grid on;
 title('M_{12} vs \theta_2')
@@ -414,22 +413,22 @@ ylabel('M12   unit: N-m')
 % Convert degrees to the radians
 theta2_rad = deg2rad(theta2_list);
 
-figure (4)
+figure (10)
 polarplot(Fij_alpha,F_list)
 grid on;
 title('F_{ij} polar plot')
 
-figure (4)
+figure (11)
 polarplot(Fij_alpha,F_list)
 grid on;
 title('F_{ij} polar plot')
 
-figure (4)
+figure (12)
 polarplot(Fij_alpha,F_list)
 grid on;
 title('F_{ij} polar plot')
 
-figure (4)
+figure (13)
 polarplot(Fij_alpha,F_list)
 grid on;
 title('F_{ij} polar plot')
