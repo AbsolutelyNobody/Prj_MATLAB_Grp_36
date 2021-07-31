@@ -199,8 +199,11 @@ IG2 = m2*(r2^2)/12; %MOI, link 2, kg*m^2
 M12_list = [];
 theta2_list = [];
 Fs_list = [];  % shaking force
+Fsx_list = [];
+Fsy_list = [];
 As_list = []; % direction of a shaking force
 Ms_list =[]; % Shaking moment
+
 %List of Forces and the Angles at which forces act%
 F16x_list = [];
 F16_list = [];
@@ -296,13 +299,27 @@ for theta2 = 0:1:360
     M12 = x(13);
     M12_list = [M12_list; M12];
     
+    %Shaking Force Equations from kinetic analysis
+    Fsx = -F16x - F12x - F13x
+    Fsx_list = [Fsx_list; Fsx];
+    Fsy = -F12y - F13y
+    Fsy_list = [Fsy_list; Fsy];
+    
     % Magnitudes of all forces: 
     % Atan is defined on [-pi/2; pi/2]. 
     % This if clause will help to adjust the value of the angle 
     % to its true value:	
 
     
-    % Directions of all forces:    
+    % Directions of all forces:  
+    fx = Fsx;
+    fy = Fsy;
+    alpha_f = atan(fx\fy);
+    if fx < 0
+        alpha_f = alpha_f + pi;
+    end 
+    Fs_alpha = [Fs_alpha; alpha_f];
+    
     fx = F16x;
     fy = 0;
     alpha_f = atan(fx\fy);
@@ -364,13 +381,7 @@ for theta2 = 0:1:360
     F13_list = sqrt((F13x_list.^2)+(F13y_list.^2))
     F24_list = sqrt((F24x_list.^2)+(F24y_list.^2))
     F12_list = sqrt((F12x_list.^2)+(F12y_list.^2))
-    
-    %Shaking force from kinetic calculations
-    %Fsx_list = -F16x_list - F12x_list - F13x_list;
-    %Fsy_list = -F12y_list - F13y_list
-    %Fs_list = sqrt((Fsx_list.^2)+(Fsy_list.^2))
-    
-    %Shaking moment from kinetic calculations
+    Fs_list = sqrt((Fsx_list.^2)+(Fsy_list.^2))
     
     
 end
